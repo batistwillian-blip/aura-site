@@ -51,12 +51,28 @@ const courseLd = {
           <h2>Para quem é</h2>
           <p>{curso.paraQuem}</p>
         </section>
-        <section>
-          <h2>O que você vai aprender</h2>
-          <ul class="checks">
-            {curso.aprende.map((a) => <li><Fragment set:html={check} /><span>{a}</span></li>)}
-          </ul>
-        </section>
+        {curso.aprende && (
+          <section>
+            <h2>O que você vai aprender</h2>
+            <ul class="checks">
+              {curso.aprende.map((a) => <li><Fragment set:html={check} /><span>{a}</span></li>)}
+            </ul>
+          </section>
+        )}
+        {curso.mercado && (
+          <section>
+            <h2>Onde você pode trabalhar</h2>
+            <ul class="checks">
+              {curso.mercado.map((a) => <li><Fragment set:html={check} /><span>{a}</span></li>)}
+            </ul>
+          </section>
+        )}
+        {curso.nivel === 'graduacao' && (
+          <section>
+            <h2>Formas de ingresso</h2>
+            <p>Vestibular online, nota do ENEM dos últimos 5 anos, transferência de outra faculdade ou diploma de graduação. A Aurora explica qual é o melhor caminho para você.</p>
+          </section>
+        )}
         <section>
           <h2>Como funciona a matrícula</h2>
           <p>Fale com a Aurora pelo WhatsApp, tire suas dúvidas sobre valores, documentos e início das aulas, e finalize a matrícula online ou no nosso polo em Balneário Camboriú.</p>

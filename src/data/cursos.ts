@@ -1,6 +1,10 @@
 // Catálogo de níveis e cursos. Para adicionar um curso, inclua um item em `cursos`:
 // a página /cursos/<slug>/ é gerada automaticamente.
 // Dados públicos das parceiras, levantados em 11/2026. Confirmar valores e condições antes de anunciar.
+// Regra: o site NUNCA linka para páginas de matrícula das parceiras. Todo contato vai direto para o WhatsApp.
+
+import type { Area } from './areas';
+import { graduacao } from './graduacao';
 
 export type NivelId = 'eja-e-tecnicos' | 'graduacao' | 'pos-graduacao' | 'mestrado';
 export type ParceiraId = 'cefe' | 'unifael' | 'agtu';
@@ -26,9 +30,13 @@ export interface Curso {
   modalidade: string;
   cargaHoraria?: string;
   grau?: string;
+  area: Area;
   resumo: string;
   paraQuem: string;
-  aprende: string[];
+  /** O que o aluno aprende (técnicos, EJA, mestrados). */
+  aprende?: string[];
+  /** Onde pode atuar depois de formado (graduações). */
+  mercado?: string[];
   destaqueBC?: boolean;
 }
 
@@ -86,7 +94,7 @@ export const niveis: Nivel[] = [
       'Graduação EAD e semipresencial da UNIFAEL, com atendimento, matrícula e acompanhamento no nosso polo em BC.',
     parceira: 'unifael',
     pontos: [
-      'Bacharelado, licenciatura e tecnólogo',
+      '39 cursos: bacharelados, licenciaturas e tecnólogos',
       'Ingresso por vestibular online, nota do ENEM, transferência ou segunda graduação',
       'Estude no seu horário, com apoio do polo',
       'Diploma da UNIFAEL, centro universitário credenciado pelo MEC',
@@ -137,7 +145,28 @@ export const niveis: Nivel[] = [
   },
 ];
 
-export const cursos: Curso[] = [
+type CursoBase = Omit<Curso, 'area'> & { area?: Area };
+
+const areaPorSlug: Record<string, Area> = {
+  'eja-ensino-fundamental': 'educacao',
+  'eja-ensino-medio': 'educacao',
+  'tecnico-em-transacoes-imobiliarias': 'imoveis',
+  'tecnico-em-guia-de-turismo': 'turismo',
+  'tecnico-em-design-de-interiores': 'design',
+  'tecnico-em-marketing': 'marketing',
+  'tecnico-em-logistica': 'logistica',
+  'tecnico-em-recursos-humanos': 'pessoas',
+  'mestrado-business-e-ia': 'tecnologia',
+  'mestrado-inteligencia-artificial': 'tecnologia',
+  'mestrado-tecnologias-digitais': 'tecnologia',
+  'mestrado-cybersecurity': 'tecnologia',
+  'mestrado-business-e-esg': 'ambiente',
+  'mestrado-educacao-e-sustentabilidade': 'educacao',
+  'mestrado-gestao-de-saude': 'saude',
+  'mestrado-direito': 'juridico',
+};
+
+const outros: CursoBase[] = [
   // ---------- EJA (CEFE) ----------
   {
     slug: 'eja-ensino-fundamental', nome: 'EJA Ensino Fundamental', nivel: 'eja-e-tecnicos', categoria: 'EJA', parceira: 'cefe',
@@ -195,63 +224,6 @@ export const cursos: Curso[] = [
     resumo: 'Forme-se para atuar na gestão do maior patrimônio das organizações: as pessoas.',
     paraQuem: 'Quem quer trabalhar com recrutamento, departamento pessoal e desenvolvimento de equipes.',
     aprende: ['Recrutamento e seleção', 'Rotinas de departamento pessoal', 'Treinamento e desenvolvimento', 'Legislação trabalhista básica'],
-  },
-  // ---------- Graduação (UNIFAEL) ----------
-  {
-    slug: 'pedagogia', nome: 'Pedagogia', nivel: 'graduacao', categoria: 'Licenciatura', parceira: 'unifael',
-    duracao: '4 anos', modalidade: 'Semipresencial', grau: 'Licenciatura',
-    resumo: 'Forme-se para atuar na educação infantil, nos anos iniciais do ensino fundamental e na gestão escolar.',
-    paraQuem: 'Quem quer ser professor ou trabalhar com educação.',
-    aprende: ['Didática e alfabetização', 'Psicologia da educação', 'Gestão escolar', 'Estágio supervisionado'],
-  },
-  {
-    slug: 'administracao', nome: 'Administração', nivel: 'graduacao', categoria: 'Bacharelado', parceira: 'unifael',
-    duracao: '4 anos', modalidade: 'EAD', grau: 'Bacharelado',
-    resumo: 'Uma das graduações mais versáteis do mercado, para gerir empresas, equipes e o seu próprio negócio.',
-    paraQuem: 'Quem quer crescer na carreira, assumir cargos de gestão ou empreender.',
-    aprende: ['Gestão de pessoas e finanças', 'Marketing e vendas', 'Planejamento estratégico', 'Empreendedorismo'],
-  },
-  {
-    slug: 'ciencias-contabeis', nome: 'Ciências Contábeis', nivel: 'graduacao', categoria: 'Bacharelado', parceira: 'unifael',
-    duracao: '4 anos', modalidade: 'EAD', grau: 'Bacharelado',
-    resumo: 'Prepare-se para atuar com contabilidade, tributos, auditoria e finanças de empresas.',
-    paraQuem: 'Quem gosta de números e quer uma carreira com alta demanda.',
-    aprende: ['Contabilidade geral e de custos', 'Legislação tributária', 'Auditoria e perícia', 'Análise financeira'],
-  },
-  {
-    slug: 'gestao-de-recursos-humanos', nome: 'Gestão de Recursos Humanos', nivel: 'graduacao', categoria: 'Tecnólogo', parceira: 'unifael',
-    duracao: '2 anos', modalidade: 'EAD', grau: 'Tecnólogo',
-    resumo: 'Graduação rápida para atuar na gestão de pessoas, do recrutamento ao desenvolvimento de equipes.',
-    paraQuem: 'Quem quer um diploma superior em pouco tempo e gosta de trabalhar com pessoas.',
-    aprende: ['Recrutamento e seleção', 'Remuneração e benefícios', 'Legislação trabalhista', 'Gestão de desempenho'],
-  },
-  {
-    slug: 'gestao-publica', nome: 'Gestão Pública', nivel: 'graduacao', categoria: 'Tecnólogo', parceira: 'unifael',
-    duracao: '2 anos', modalidade: 'EAD', grau: 'Tecnólogo',
-    resumo: 'Formação para atuar na administração de órgãos públicos e se preparar para concursos.',
-    paraQuem: 'Servidores públicos e quem quer seguir carreira no setor público.',
-    aprende: ['Administração pública', 'Orçamento e finanças públicas', 'Licitações e contratos', 'Políticas públicas'],
-  },
-  {
-    slug: 'logistica', nome: 'Logística', nivel: 'graduacao', categoria: 'Tecnólogo', parceira: 'unifael',
-    duracao: '2 anos', modalidade: 'EAD', grau: 'Tecnólogo',
-    resumo: 'Diploma superior em 2 anos para atuar em portos, transportadoras e centros de distribuição.',
-    paraQuem: 'Quem trabalha ou quer trabalhar na logística, setor forte em Itajaí e região.',
-    aprende: ['Cadeia de suprimentos', 'Transportes e armazenagem', 'Comércio exterior', 'Gestão de custos logísticos'],
-  },
-  {
-    slug: 'analise-e-desenvolvimento-de-sistemas', nome: 'Análise e Desenvolvimento de Sistemas', nivel: 'graduacao', categoria: 'Tecnólogo', parceira: 'unifael',
-    duracao: '2 anos e meio', modalidade: 'EAD', grau: 'Tecnólogo',
-    resumo: 'Aprenda a programar e desenvolver sistemas, apps e soluções para empresas.',
-    paraQuem: 'Quem quer entrar na área de tecnologia, uma das que mais contratam.',
-    aprende: ['Lógica e programação', 'Banco de dados', 'Desenvolvimento web e mobile', 'Engenharia de software'],
-  },
-  {
-    slug: 'educacao-fisica', nome: 'Educação Física', nivel: 'graduacao', categoria: 'Bacharelado / Licenciatura', parceira: 'unifael',
-    duracao: '4 anos', modalidade: 'Semipresencial', grau: 'Bacharelado ou Licenciatura',
-    resumo: 'Forme-se para atuar em academias, escolas, clubes e com treinamento esportivo.',
-    paraQuem: 'Quem é apaixonado por esporte, saúde e qualidade de vida.',
-    aprende: ['Fisiologia do exercício', 'Treinamento esportivo', 'Educação física escolar', 'Práticas em laboratório'],
   },
   // ---------- Mestrado (AGTU) ----------
   {
@@ -312,6 +284,14 @@ export const cursos: Curso[] = [
   },
 ];
 
-export const getNivel = (id: NivelId) => niveis.find((n) => n.id === id)!;
+const comArea = (c: CursoBase): Curso => ({ ...c, area: c.area ?? areaPorSlug[c.slug] ?? 'gestao' });
+
+export const cursos: Curso[] = [
+  ...outros.filter((c) => c.nivel === 'eja-e-tecnicos').map(comArea),
+  ...graduacao,
+  ...outros.filter((c) => c.nivel === 'mestrado').map(comArea),
+];
+
+export const getNivel =(id: NivelId) => niveis.find((n) => n.id === id)!;
 export const cursosDoNivel = (id: NivelId) => cursos.filter((c) => c.nivel === id);
 export const mensagemCurso = (c: Curso) => `Olá! Vim pelo site da AURA e quero saber mais sobre o curso ${c.nome}.`;

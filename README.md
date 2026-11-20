@@ -38,7 +38,16 @@ Os cliques no WhatsApp enviam o evento `whatsapp_click` para o dataLayer e `Cont
 
 ## Editar cursos
 
-Os cursos ficam em `src/data/cursos.ts`. Cada item em `cursos` gera uma página em `/cursos/<slug>/`. As páginas por nível são `/eja-e-tecnicos/`, `/graduacao/`, `/pos-graduacao/` e `/mestrado/`.
+- EJA, técnicos e mestrados: `src/data/cursos.ts`
+- Graduações UNIFAEL (39): `src/data/graduacao.ts`
+
+Cada curso gera uma página em `/cursos/<slug>/`. As páginas por nível são `/eja-e-tecnicos/`, `/graduacao/`, `/pos-graduacao/` e `/mestrado/`.
+
+**Regra:** o site nunca linka para páginas de inscrição ou matrícula das parceiras. Todo contato vai direto para o WhatsApp. Os valores também não ficam no site, porque mudam com o tempo e quem passa é a Aurora.
+
+## Fotos
+
+Cada curso tem uma `area` (veja `src/data/areas.ts`), e a foto do card vem de `src/assets/areas/<area>.jpg`. Para trocar uma foto, substitua o arquivo, mantendo o mesmo nome. O build gera versões WebP otimizadas, com cerca de 25 KB em média, e elas carregam só quando aparecem na tela. Sem foto, o card usa o gradiente da área. As origens estão em `src/assets/areas/CREDITOS.md`.
 
 ## Pendências
 
