@@ -1,0 +1,157 @@
+---
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import WaIcon from '../components/WaIcon.astro';
+import { site, whatsappLink } from '../data/site';
+import { niveis } from '../data/cursos';
+
+interface Props {
+  title: string;
+  description: string;
+  waMessage?: string;
+  jsonLd?: Record<string, unknown>;
+}
+const { title, description, waMessage, jsonLd } = Astro.props;
+const fullTitle = title === site.nome ? `${site.nome} · Balneário Camboriú` : `${title} · ${site.nome}`;
+const canonical = new URL(Astro.url.pathname, site.url).toString();
+const wa = whatsappLink(waMessage);
+const path = Astro.url.pathname;
+const { gtmId, metaPixelId } = site;
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: site.nome,
+  url: site.url,
+  telephone: '+55 47 3514-8552',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'R. Tailândia, 72, sala 18',
+    addressLocality: 'Balneário Camboriú',
+    addressRegion: 'SC',
+    addressCountry: 'BR',
+  },
+};
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#6D3BF5" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content={site.nome} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+  <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+  {gtmId && (
+    <script is:inline define:vars={{ gtmId }}>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+    </script>
+  )}
+  {metaPixelId && (
+    <script is:inline define:vars={{ metaPixelId }}>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', metaPixelId); fbq('track', 'PageView');
+    </script>
+  )}
+</head>
+<body>
+  {gtmId && <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>}
+
+  <div class="topbar">
+    <div class="container">
+      <span class="loc">Polo em <b>Balneário Camboriú</b> · atendimento também 100% online</span>
+      <a href={wa} target="_blank" rel="noopener" data-wa="topbar"><WaIcon size={14} color="#25D366" /> Matrícula pelo WhatsApp: <b>{site.telefoneExibicao}</b></a>
+    </div>
+  </div>
+
+  <header class="nav">
+    <div class="container">
+      <a href="/" aria-label="AURA Hub Educacional, página inicial"><Logo /></a>
+      <nav aria-label="Principal">
+        <ul class="menu" id="menu">
+          {niveis.map((n) => (
+            <li><a href={`/${n.id}/`} aria-current={path.startsWith(`/${n.id}`) ? 'page' : undefined}>{n.titulo}</a></li>
+          ))}
+          <li><a href="/cursos/" aria-current={path.startsWith('/cursos') ? 'page' : undefined}>Todos os cursos</a></li>
+          <li><a href="/sobre/" aria-current={path.startsWith('/sobre') ? 'page' : undefined}>Sobre o hub</a></li>
+        </ul>
+      </nav>
+      <div style="display:flex;gap:6px;align-items:center">
+        <a class="btn-wa btn-sm" href={wa} target="_blank" rel="noopener" data-wa="nav"><WaIcon /><span class="lbl-long">Falar com a Aurora</span><span class="lbl-short">WhatsApp</span></a>
+        <button class="nav-toggle" type="button" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="foot">
+    <div class="container">
+      <div style="display:grid;gap:12px;align-content:start">
+        <Logo dark />
+        <p>{site.slogan}</p>
+      </div>
+      <div>
+        <h2>Cursos</h2>
+        <ul>
+          {niveis.map((n) => <li><a href={`/${n.id}/`}>{n.titulo}</a></li>)}
+          <li><a href="/cursos/">Todos os cursos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>A AURA</h2>
+        <ul>
+          <li><a href="/sobre/">Sobre o hub</a></li>
+          <li><a href="/sobre/#parceiras">Instituições parceiras</a></li>
+          <li><a href={site.endereco.mapsUrl} target="_blank" rel="noopener">Como chegar</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Contato</h2>
+        <ul>
+          <li><a href={wa} target="_blank" rel="noopener" data-wa="footer">WhatsApp {site.telefoneExibicao}</a></li>
+          <li>{site.endereco.linha1}</li>
+          <li>{site.endereco.linha2}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal"><div class="container">© {new Date().getFullYear()} {site.razaoSocial} · Polo e representante comercial. Os diplomas e certificados são emitidos pelas instituições parceiras.</div></div>
+  </footer>
+
+  <a class="fab" href={wa} target="_blank" rel="noopener" aria-label="Falar no WhatsApp" data-wa="fab"><WaIcon size={30} color="#fff" /></a>
+
+  <script>
+    const btn = document.querySelector<HTMLButtonElement>('.nav-toggle');
+    const menu = document.getElementById('menu');
+    btn?.addEventListener('click', () => {
+      const open = menu?.classList.toggle('open') ?? false;
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    // Evento de conversão: clique em qualquer link de WhatsApp
+    document.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest('a[href*="wa.me"]');
+      if (!a) return;
+      const w = window as any;
+      w.dataLayer?.push({ event: 'whatsapp_click', origem: a.getAttribute('data-wa') || 'link' });
+      w.fbq?.('track', 'Contact');
+    });
+  </script>
+</body>
+</html>

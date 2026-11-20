@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import WaIcon from '../../components/WaIcon.astro';
+import { site, whatsappLink } from '../../data/site';
+import { cursos, getNivel, parceiras, avisoMestrado, mensagemCurso, type Curso } from '../../data/cursos';
+
+export function getStaticPaths() {
+  return cursos.map((c) => ({ params: { slug: c.slug }, props: { curso: c } }));
+}
+
+const { curso } = Astro.props as { curso: Curso };
+const nivel = getNivel(curso.nivel);
+const parceira = parceiras[curso.parceira];
+const msg = mensagemCurso(curso);
+const relacionados = cursos.filter((c) => c.nivel === curso.nivel && c.slug !== curso.slug).slice(0, 3);
+const check = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>`;
+const courseLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: curso.nome,
+  description: curso.resumo,
+  provider: { '@type': 'Organization', name: parceira.nome },
+  offers: { '@type': 'Offer', category: 'Educação', seller: { '@type': 'Organization', name: site.nome } },
+};
+---
+<Base title={curso.nome} description={`${curso.resumo} ${parceira.selo}. Matrícula com a AURA em Balneário Camboriú.`} waMessage={msg} jsonLd={courseLd}>
+  <section class="page-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="Você está em"><a href="/">Início</a><span>›</span><a href={`/${nivel.id}/`}>{nivel.titulo}</a><span>›</span><span>{curso.nome}</span></nav>
+      <span class="kick">{curso.categoria}{curso.destaqueBC ? ' · Destaque em BC' : ''}</span>
+      <h1>{curso.nome}</h1>
+      <p class="sub">{curso.resumo}</p>
+      <div class="facts">
+        <span><b>Duração</b>{curso.duracao}</span>
+        <span><b>Modalidade</b>{curso.modalidade}</span>
+        {curso.cargaHoraria && <span><b>Carga</b>{curso.cargaHoraria}</span>}
+        {curso.grau && <span><b>Grau</b>{curso.grau}</span>}
+        <span><b>{curso.parceira === 'cefe' ? 'Certificado' : 'Diploma'}</b>{parceira.nome}</span>
+      </div>
+      <div class="ctas">
+        <a class="btn-wa" href={whatsappLink(msg)} target="_blank" rel="noopener" data-wa={`curso-${curso.slug}`}><WaIcon />Quero me matricular</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="container two">
+      <div class="prose">
+        <section>
+          <h2>Para quem é</h2>
+          <p>{curso.paraQuem}</p>
+        </section>
+        <section>
+          <h2>O que você vai aprender</h2>
+          <ul class="checks">
+            {curso.aprende.map((a) => <li><Fragment set:html={check} /><span>{a}</span></li>)}
+          </ul>
+        </section>
+        <section>
+          <h2>Como funciona a matrícula</h2>
+          <p>Fale com a Aurora pelo WhatsApp, tire suas dúvidas sobre valores, documentos e início das aulas, e finalize a matrícula online ou no nosso polo em Balneário Camboriú.</p>
+        </section>
+        {curso.nivel === 'mestrado' && <p class="disclaimer">{avisoMestrado}</p>}
+      </div>
+      <aside class="side">
+        <h3>{curso.nome}</h3>
+        <p>Valores, condições e próximas turmas pelo WhatsApp, na hora.</p>
+        <a class="btn-wa" href={whatsappLink(msg)} target="_blank" rel="noopener" data-wa={`side-${curso.slug}`}><WaIcon />Falar com a Aurora</a>
+        <div class="by">{parceira.selo}. A AURA é polo e representante comercial.</div>
+      </aside>
+    </div>
+  </section>
+
+  {relacionados.length > 0 && (
+    <section class="blk alt">
+      <div class="container">
+        <div class="blk-h"><span class="kick">Veja também</span><h2>Outros cursos de {nivel.titulo.toLowerCase()}</h2></div>
+        <div class="courses c3">{relacionados.map((c, i) => <CourseCard curso={c} idx={i} />)}</div>
+      </div>
+    </section>
+  )}
+</Base>

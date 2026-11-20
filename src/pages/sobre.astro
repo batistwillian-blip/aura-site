@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import WaIcon from '../components/WaIcon.astro';
+import { whatsappLink } from '../data/site';
+import { parceiras, avisoMestrado } from '../data/cursos';
+---
+<Base title="Sobre o hub" description="A AURA Hub Educacional reúne EJA, técnicos, graduação, pós e mestrado em um só lugar, com polo em Balneário Camboriú e instituições parceiras reconhecidas.">
+  <section class="page-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="Você está em"><a href="/">Início</a><span>›</span><span>Sobre o hub</span></nav>
+      <span class="kick">Sobre a AURA</span>
+      <h1>Um só lugar para cada passo da sua educação</h1>
+      <p class="sub">A AURA Hub Educacional nasceu em Balneário Camboriú para simplificar a vida de quem quer estudar. Em vez de procurar uma escola para cada fase, você encontra aqui o EJA, os cursos técnicos, a graduação, a pós e o mestrado, com orientação de verdade do começo ao diploma.</p>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="container two">
+      <div class="prose">
+        <section>
+          <h2>O que é um hub educacional</h2>
+          <p>A AURA é a curadora e o ponto de apoio. Escolhemos instituições sérias, orientamos você na escolha do curso, cuidamos da matrícula e acompanhamos sua jornada. As instituições parceiras oferecem o conteúdo e emitem o diploma.</p>
+        </section>
+        <section>
+          <h2>Nosso compromisso</h2>
+          <p>Lidamos com o sonho das pessoas. Por isso falamos com clareza, sem promessas que não podemos cumprir, e indicamos o caminho certo para você, mesmo que não seja o mais caro.</p>
+        </section>
+      </div>
+      <aside class="side">
+        <h3>Ficou com alguma dúvida?</h3>
+        <p>A Aurora responde 24h pelo WhatsApp.</p>
+        <a class="btn-wa" href={whatsappLink()} target="_blank" rel="noopener" data-wa="sobre"><WaIcon />Falar com a Aurora</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="blk alt" id="parceiras">
+    <div class="container">
+      <div class="blk-h"><span class="kick">Instituições parceiras</span><h2>Quem emite o seu diploma</h2></div>
+      <div class="partners">
+        {Object.values(parceiras).map((p) => (
+          <div class="pa"><span class="what">{p.papel}</span><div class="nm">{p.nome}</div><p>{p.descricao}</p></div>
+        ))}
+      </div>
+      <p class="disclaimer">A AURA Hub Educacional é polo e representante comercial. Os diplomas e certificados são emitidos pelas instituições parceiras. {avisoMestrado}</p>
+    </div>
+  </section>
+</Base>

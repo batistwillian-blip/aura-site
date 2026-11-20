@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import CourseCard from '../components/CourseCard.astro';
+import WaIcon from '../components/WaIcon.astro';
+import { whatsappLink } from '../data/site';
+import { niveis, cursosDoNivel, parceiras, avisoMestrado, type Nivel } from '../data/cursos';
+
+export function getStaticPaths() {
+  return niveis.map((n) => ({ params: { nivel: n.id }, props: { nivel: n } }));
+}
+
+const { nivel } = Astro.props as { nivel: Nivel };
+const lista = cursosDoNivel(nivel.id);
+const eja = lista.filter((c) => c.categoria === 'EJA');
+const tecnicos = lista.filter((c) => c.categoria === 'Técnico');
+const parceira = parceiras[nivel.parceira];
+const msg = `Olá! Vim pelo site da AURA e quero saber mais sobre ${nivel.titulo}.`;
+const check = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>`;
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: nivel.faq.map((f) => ({ '@type': 'Question', name: f.p, acceptedAnswer: { '@type': 'Answer', text: f.r } })),
+};
+---
+<Base title={nivel.titulo} description={nivel.descricao} waMessage={msg} jsonLd={faqLd}>
+  <section class="page-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="Você está em"><a href="/">Início</a><span>›</span><span>{nivel.titulo}</span></nav>
+      <span class="kick">{nivel.momento}</span>
+      <h1>{nivel.chamada}</h1>
+      <p class="sub">{nivel.descricao}</p>
+      <div class="ctas">
+        <a class="btn-wa" href={whatsappLink(msg)} target="_blank" rel="noopener" data-wa={`nivel-${nivel.id}`}><WaIcon />Falar com a Aurora</a>
+        {lista.length > 0 && <a class="btn-ghost" href="#cursos">Ver cursos</a>}
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="container two">
+      <div class="prose">
+        <section>
+          <h2>Por que estudar com a AURA</h2>
+          <ul class="checks">
+            {nivel.pontos.map((p) => <li><Fragment set:html={check} /><span>{p}</span></li>)}
+          </ul>
+        </section>
+        {nivel.id === 'mestrado' && <p class="disclaimer">{avisoMestrado}</p>}
+      </div>
+      <aside class="side">
+        <h3>Atendimento pelo WhatsApp</h3>
+        <p>A Aurora tira suas dúvidas na hora, e a equipe do polo cuida da sua matrícula.</p>
+        <a class="btn-wa" href={whatsappLink(msg)} target="_blank" rel="noopener" data-wa={`side-${nivel.id}`}><WaIcon />Quero saber mais</a>
+        <div class="by">{parceira.selo}. A AURA é polo e representante comercial.</div>
+      </aside>
+    </div>
+  </section>
+
+  {lista.length > 0 && (
+    <section class="blk alt" id="cursos">
+      <div class="container">
+        {nivel.id === 'eja-e-tecnicos' ? (
+          <>
+            <div class="blk-h" id="eja"><span class="kick">EJA · Supletivo</span><h2>Termine seus estudos</h2></div>
+            <div class="courses c3">{eja.map((c, i) => <CourseCard curso={c} idx={i} />)}</div>
+            <div class="blk-h" id="tecnicos" style="margin-top:56px"><span class="kick">Cursos técnicos</span><h2>Uma profissão em poucos meses</h2></div>
+            <div class="courses c3">{tecnicos.map((c, i) => <CourseCard curso={c} idx={i + 1} />)}</div>
+            <p class="disclaimer">Também temos centenas de cursos profissionalizantes livres. Pergunte à Aurora pelo WhatsApp.</p>
+          </>
+        ) : (
+          <>
+            <div class="blk-h"><span class="kick">Cursos disponíveis</span><h2>Escolha seu curso</h2></div>
+            <div class="courses c3">{lista.map((c, i) => <CourseCard curso={c} idx={i} />)}</div>
+            {nivel.id === 'graduacao' && <p class="disclaimer">Esses são alguns dos cursos mais procurados. A UNIFAEL tem muitas outras graduações: pergunte à Aurora.</p>}
+          </>
+        )}
+      </div>
+    </section>
+  )}
+
+  <section class="blk">
+    <div class="container">
+      <div class="blk-h"><span class="kick">Dúvidas frequentes</span><h2>Perguntas sobre {nivel.titulo.toLowerCase()}</h2></div>
+      <div class="faq">
+        {nivel.faq.map((f) => <details><summary>{f.p}</summary><p>{f.r}</p></details>)}
+      </div>
+    </div>
+  </section>
+</Base>

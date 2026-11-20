@@ -1,0 +1,18 @@
+---
+import { parceiras, type Curso } from '../data/cursos';
+interface Props { curso: Curso; idx?: number }
+const { curso, idx = 0 } = Astro.props;
+const grad = ['g1', 'g2', 'g3', 'g4'][idx % 4];
+const nivelLabel: Record<string, string> = { 'eja-e-tecnicos': curso.categoria, graduacao: 'Graduação', 'pos-graduacao': 'Pós', mestrado: 'Mestrado' };
+---
+<a class="co" href={`/cursos/${curso.slug}/`} data-nivel={curso.nivel} data-nome={curso.nome.toLowerCase()}>
+  <div class={`top ${grad}`}>
+    <span class="lvl">{nivelLabel[curso.nivel]}</span>
+    {curso.destaqueBC && <span class="local">Destaque BC</span>}
+  </div>
+  <div class="body">
+    <h3>{curso.nome}</h3>
+    <div class="meta"><span>{curso.duracao}</span><span>{curso.modalidade}</span>{curso.cargaHoraria && <span>{curso.cargaHoraria}</span>}</div>
+    <div class="by">{curso.parceira === 'cefe' ? 'Certificado' : 'Diploma'} <b>{parceiras[curso.parceira].nome}</b></div>
+  </div>
+</a>
