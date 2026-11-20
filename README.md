@@ -40,10 +40,19 @@ Os cliques no WhatsApp enviam o evento `whatsapp_click` para o dataLayer e `Cont
 
 - EJA, técnicos e mestrados: `src/data/cursos.ts`
 - Graduações UNIFAEL (39): `src/data/graduacao.ts`
+- Pós-graduações UNIFAEL (263): `src/data/pos.ts`, com os valores em `src/data/pos-unifael.csv` e o conteúdo (sobre, objetivos, disciplinas e público) em `src/data/pos-conteudo.json`
 
 Cada curso gera uma página em `/cursos/<slug>/`. As páginas por nível são `/eja-e-tecnicos/`, `/graduacao/`, `/pos-graduacao/` e `/mestrado/`.
 
-**Regra:** o site nunca linka para páginas de inscrição ou matrícula das parceiras. Todo contato vai direto para o WhatsApp. Os valores também não ficam no site, porque mudam com o tempo e quem passa é a Aurora.
+**Regra:** o site nunca linka para páginas de inscrição ou matrícula das parceiras. Todo contato vai direto para o WhatsApp. Só a pós mostra valores; os demais níveis ficam com a Aurora.
+
+### Atualizar os valores da pós (todo mês)
+
+1. Exporte o CSV do simulador do mês (o mesmo da Aurora, separado por `;`).
+2. Rode `node scripts/atualizar-pos.mjs "<caminho do csv>"`. O script grava só as colunas que o site mostra: o valor cheio e o % de desconto não vão para o repositório, que é público.
+3. Faça commit, push e o deploy no Easypanel.
+
+O site mostra a mensalidade no boleto com pagamento até o dia 8, a mensalidade no cartão (na página do curso) e o mês de vigência. Um curso novo no CSV ganha página automaticamente, com um texto padrão da área enquanto não houver conteúdo dele em `pos-conteudo.json`.
 
 ## Fotos
 

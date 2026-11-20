@@ -15,19 +15,23 @@ const [c1, c2] = areas[curso.area].grad;
 const nivelLabel: Record<string, string> = {
   'eja-e-tecnicos': curso.categoria,
   graduacao: curso.grau ?? 'Graduação',
-  'pos-graduacao': 'Pós',
+  'pos-graduacao': curso.categoria,
   mestrado: 'Mestrado',
 };
+const certificado = curso.parceira === 'cefe' || curso.nivel === 'pos-graduacao';
 ---
-<a class="co" href={`/cursos/${curso.slug}/`} data-nivel={curso.nivel} data-nome={curso.nome.toLowerCase()}>
+<a class="co" href={`/cursos/${curso.slug}/`} data-nivel={curso.nivel} data-area={curso.area} data-meses={curso.meses} data-nome={curso.nome.toLowerCase()}>
   <div class="top" style={`background:linear-gradient(135deg,${c1},${c2})`}>
     {foto && <Image src={foto} alt="" widths={[320, 480, 640]} quality={55} format="webp" sizes="(max-width: 560px) 100vw, (max-width: 980px) 50vw, 280px" loading="lazy" decoding="async" class="ph" />}
     <span class="lvl">{nivelLabel[curso.nivel]}</span>
     {curso.destaqueBC && <span class="local">Destaque BC</span>}
   </div>
   <div class="body">
-    <h3>{curso.nome}</h3>
+    <h3>{curso.nomeCurto ?? curso.nome}</h3>
     <div class="meta"><span>{curso.duracao}</span><span>{curso.modalidade}</span>{curso.cargaHoraria && <span>{curso.cargaHoraria}</span>}</div>
-    <div class="by">{curso.parceira === 'cefe' ? 'Certificado' : 'Diploma'} <b>{parceiras[curso.parceira].nome}</b></div>
+    {curso.preco && (
+      <div class="price"><small>{curso.preco.parcelas}x de</small> <b>R$ {curso.preco.boleto}</b></div>
+    )}
+    <div class="by">{certificado ? 'Certificado' : 'Diploma'} <b>{parceiras[curso.parceira].nome}</b></div>
   </div>
 </a>

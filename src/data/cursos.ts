@@ -5,6 +5,10 @@
 
 import type { Area } from './areas';
 import { graduacao } from './graduacao';
+import { pos } from './pos';
+
+const reais = (v: string) => Number(v.replace(/\./g, '').replace(',', '.'));
+const menorParcelaPos = pos.reduce((m, p) => (p.preco && reais(p.preco.boleto) < reais(m) ? p.preco.boleto : m), pos[0]?.preco?.boleto ?? '0');
 
 export type NivelId = 'eja-e-tecnicos' | 'graduacao' | 'pos-graduacao' | 'mestrado';
 export type ParceiraId = 'cefe' | 'unifael' | 'agtu';
@@ -38,6 +42,18 @@ export interface Curso {
   /** Onde pode atuar depois de formado (graduações). */
   mercado?: string[];
   destaqueBC?: boolean;
+  // ---- pós-graduação ----
+  /** Nome sem "Especialização em" / "MBA em" (cards). */
+  nomeCurto?: string;
+  sobre?: string[];
+  /** Objetivo geral (pós), mostrado antes da lista "O que você vai aprender". */
+  objetivo?: string;
+  disciplinas?: string[];
+  /** Mensalidade do mês (só pós). */
+  preco?: { parcelas: number; boleto: string; cartao: string; vigencia: string };
+  meses?: number;
+  /** Slug da versão com as mesmas disciplinas e outra duração. */
+  versao?: string;
 }
 
 export const parceiras: Record<ParceiraId, { nome: string; papel: string; descricao: string; selo: string }> = {
@@ -111,17 +127,20 @@ export const niveis: Nivel[] = [
     momento: 'Quero me especializar',
     chamada: 'Especialize-se e cresça na carreira',
     descricao:
-      'Pós-graduação EAD da UNIFAEL em diversas áreas, para quem já tem diploma de graduação e quer se destacar.',
+      'Mais de 260 especializações e MBAs 100% online da UNIFAEL, em 4, 6 ou 12 meses, com matrícula e acompanhamento no nosso polo em Balneário Camboriú.',
     parceira: 'unifael',
     pontos: [
-      'Cursos 100% online em várias áreas',
-      'Ideal para crescer na carreira ou mudar de área',
-      'Ingresso simples para quem já tem graduação',
-      'Certificado da UNIFAEL',
+      'Especializações e MBAs em educação, saúde, gestão, direito, tecnologia e mais',
+      'Conclusão em 4, 6 ou 12 meses, 100% online',
+      `Mensalidades a partir de R$ ${menorParcelaPos} no boleto`,
+      'Certificado da UNIFAEL, credenciada pelo MEC para pós EAD',
     ],
     faq: [
-      { p: 'Quem pode fazer pós-graduação?', r: 'Quem já concluiu um curso de graduação (bacharelado, licenciatura ou tecnólogo).' },
-      { p: 'Quais áreas estão disponíveis?', r: 'Educação, gestão, saúde, tecnologia e outras. A Aurora mostra a lista completa no WhatsApp.' },
+      { p: 'Quem pode fazer pós-graduação?', r: 'Quem já concluiu um curso de graduação: bacharelado, licenciatura ou tecnólogo.' },
+      { p: 'O certificado é reconhecido?', r: 'Sim. A UNIFAEL é credenciada pelo MEC para ofertar pós-graduação lato sensu a distância, e o certificado tem a mesma validade do presencial.' },
+      { p: 'Preciso fazer TCC?', r: 'Na maioria dos cursos, não. O TCC é obrigatório só em alguns cursos de Saúde e Engenharia, conforme o conselho de classe. Nos demais, ele é opcional.' },
+      { p: 'Qual a diferença entre as versões de 6 e 12 meses?', r: 'Muitos cursos têm duas versões com as mesmas disciplinas. Muda o tempo para concluir e o parcelamento: na de 12 meses a parcela é menor.' },
+      { p: 'Os valores do site são fixos?', r: 'Os valores mostrados são do mês vigente, no boleto pago até o dia 8. Eles mudam todo mês e dependem da disponibilidade de bolsas. A Aurora confirma a condição do dia.' },
     ],
   },
   {
@@ -289,6 +308,7 @@ const comArea = (c: CursoBase): Curso => ({ ...c, area: c.area ?? areaPorSlug[c.
 export const cursos: Curso[] = [
   ...outros.filter((c) => c.nivel === 'eja-e-tecnicos').map(comArea),
   ...graduacao,
+  ...pos,
   ...outros.filter((c) => c.nivel === 'mestrado').map(comArea),
 ];
 

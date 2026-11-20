@@ -13,7 +13,12 @@ const { curso } = Astro.props as { curso: Curso };
 const nivel = getNivel(curso.nivel);
 const parceira = parceiras[curso.parceira];
 const msg = mensagemCurso(curso);
-const relacionados = cursos.filter((c) => c.nivel === curso.nivel && c.slug !== curso.slug).slice(0, 3);
+const pos = curso.nivel === 'pos-graduacao';
+const versao = curso.versao ? cursos.find((c) => c.slug === curso.versao) : undefined;
+const mesmoNivel = cursos.filter((c) => c.nivel === curso.nivel && c.slug !== curso.slug && c.slug !== curso.versao);
+const relacionados = (pos ? [...mesmoNivel.filter((c) => c.area === curso.area), ...mesmoNivel.filter((c) => c.area !== curso.area)] : mesmoNivel).slice(0, 3);
+const certificado = curso.parceira === 'cefe' || pos;
+const vig = curso.preco ? (() => { const [m, a] = curso.preco.vigencia.split('/'); return `${['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'][Number(m) - 1]} de ${a}`; })() : '';
 const check = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>`;
 const courseLd = {
   '@context': 'https://schema.org',
@@ -36,7 +41,8 @@ const courseLd = {
         <span><b>Modalidade</b>{curso.modalidade}</span>
         {curso.cargaHoraria && <span><b>Carga</b>{curso.cargaHoraria}</span>}
         {curso.grau && <span><b>Grau</b>{curso.grau}</span>}
-        <span><b>{curso.parceira === 'cefe' ? 'Certificado' : 'Diploma'}</b>{parceira.nome}</span>
+        {curso.preco && <span><b>Mensalidade</b>{curso.preco.parcelas}x de R$ {curso.preco.boleto}</span>}
+        <span><b>{certificado ? 'Certificado' : 'Diploma'}</b>{parceira.nome}</span>
       </div>
       <div class="ctas">
         <a class="btn-wa" href={whatsappLink(msg)} target="_blank" rel="noopener" data-wa={`curso-${curso.slug}`}><WaIcon />Quero me matricular</a>
@@ -47,16 +53,23 @@ const courseLd = {
   <section class="blk">
     <div class="container two">
       <div class="prose">
+        {curso.sobre && curso.sobre.length > 0 && (
+          <section>
+            <h2>Sobre o curso</h2>
+            {curso.sobre.map((p) => <p>{p}</p>)}
+          </section>
+        )}
         <section>
           <h2>Para quem é</h2>
           <p>{curso.paraQuem}</p>
         </section>
-        {curso.aprende && (
+        {(curso.aprende || curso.objetivo) && (
           <section>
-            <h2>O que você vai aprender</h2>
-            <ul class="checks">
+            <h2>{curso.aprende ? 'O que você vai aprender' : 'Objetivo do curso'}</h2>
+            {curso.objetivo && <p>{curso.objetivo}</p>}
+            {curso.aprende && <ul class="checks" style={curso.objetivo ? 'margin-top:14px' : undefined}>
               {curso.aprende.map((a) => <li><Fragment set:html={check} /><span>{a}</span></li>)}
-            </ul>
+            </ul>}
           </section>
         )}
         {curso.mercado && (
@@ -65,6 +78,24 @@ const courseLd = {
             <ul class="checks">
               {curso.mercado.map((a) => <li><Fragment set:html={check} /><span>{a}</span></li>)}
             </ul>
+          </section>
+        )}
+        {curso.disciplinas && (
+          <section>
+            <h2>Disciplinas</h2>
+            <ul class="disc">{curso.disciplinas.map((d) => <li>{d}</li>)}</ul>
+          </section>
+        )}
+        {versao && (
+          <section class="alt-version">
+            <span>Também disponível em <b>{versao.duracao}</b>, com as mesmas disciplinas{versao.preco ? `, em ${versao.preco.parcelas}x de R$ ${versao.preco.boleto}` : ''}.</span>
+            <a href={`/cursos/${versao.slug}/`}>Ver {versao.nome} →</a>
+          </section>
+        )}
+        {pos && (
+          <section>
+            <h2>Como são as aulas</h2>
+            <p>Tudo online: videoaulas, e-books, fóruns, biblioteca virtual e tutor para tirar dúvidas, pelo celular ou computador. O TCC não é obrigatório na maioria dos cursos. Requisito: graduação concluída (bacharelado, licenciatura ou tecnólogo).</p>
           </section>
         )}
         {curso.nivel === 'graduacao' && (
@@ -81,9 +112,17 @@ const courseLd = {
       </div>
       <aside class="side">
         <h3>{curso.nome}</h3>
-        <p>Valores, condições e próximas turmas pelo WhatsApp, na hora.</p>
+        {curso.preco ? (
+          <div class="invest">
+            <div class="v">{curso.preco.parcelas}x R$ {curso.preco.boleto}<small> /mês</small></div>
+            <p>No boleto ou PIX, pagando até o dia 8. No cartão: {curso.preco.parcelas}x R$ {curso.preco.cartao}.</p>
+            <p>Condição de {vig}, sujeita à disponibilidade de bolsas.</p>
+          </div>
+        ) : (
+          <p>Valores, condições e próximas turmas pelo WhatsApp, na hora.</p>
+        )}
         <a class="btn-wa" href={whatsappLink(msg)} target="_blank" rel="noopener" data-wa={`side-${curso.slug}`}><WaIcon />Falar com a Aurora</a>
-        <div class="by">{parceira.selo}. A AURA é polo e representante comercial.</div>
+        <div class="by">{pos ? 'Certificado emitido pela UNIFAEL' : parceira.selo}. A AURA é polo e representante comercial.</div>
       </aside>
     </div>
   </section>

@@ -39,10 +39,11 @@ import { cursos, niveis } from '../../data/cursos';
     q.value = params.get('q') ?? '';
     const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
     function apply() {
-      const term = norm(q.value.trim());
+      const terms = norm(q.value.trim()).split(/\s+/).filter(Boolean);
       let shown = 0;
       for (const c of cards) {
-        const ok = (!nivel || c.dataset.nivel === nivel) && (!term || norm(c.dataset.nome || '').includes(term));
+        const nome = norm(c.dataset.nome || '');
+        const ok = (!nivel || c.dataset.nivel === nivel) && terms.every((t) => nome.includes(t));
         c.hidden = !ok;
         if (ok) shown++;
       }

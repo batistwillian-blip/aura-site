@@ -4,6 +4,8 @@ import CourseCard from '../components/CourseCard.astro';
 import WaIcon from '../components/WaIcon.astro';
 import { whatsappLink } from '../data/site';
 import { niveis, cursosDoNivel, parceiras, avisoMestrado, type Nivel } from '../data/cursos';
+import { areas, type Area } from '../data/areas';
+import { vigenciaPosTexto } from '../data/pos';
 
 export function getStaticPaths() {
   return niveis.map((n) => ({ params: { nivel: n.id }, props: { nivel: n } }));
@@ -19,6 +21,9 @@ const grupos = [
   { id: 'bacharelados', kick: 'Bacharelados · 3 a 5 anos', titulo: 'Formação completa para a sua profissão', desc: 'Graduações amplas, que abrem portas para cargos de gestão, concursos e especializações.', lista: lista.filter((c) => c.grau === 'Bacharelado') },
   { id: 'licenciaturas', kick: 'Licenciaturas · 4 anos', titulo: 'Para quem quer ser professor', desc: 'Formação para dar aula na educação básica, com teoria online e atividades presenciais.', lista: lista.filter((c) => c.grau === 'Licenciatura') },
 ].filter((g) => g.lista.length);
+const contagem = new Map<Area, number>();
+if (nivel.id === 'pos-graduacao') for (const c of lista) contagem.set(c.area, (contagem.get(c.area) ?? 0) + 1);
+const areasPos = [...contagem.entries()].sort((a, b) => b[1] - a[1]);
 const msg = `Olá! Vim pelo site da AURA e quero saber mais sobre ${nivel.titulo}.`;
 const check = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>`;
 const faqLd = {
@@ -56,7 +61,7 @@ const faqLd = {
         <h3>Atendimento pelo WhatsApp</h3>
         <p>A Aurora tira suas dúvidas na hora, e a equipe do polo cuida da sua matrícula.</p>
         <a class="btn-wa" href={whatsappLink(msg)} target="_blank" rel="noopener" data-wa={`side-${nivel.id}`}><WaIcon />Quero saber mais</a>
-        <div class="by">{parceira.selo}. A AURA é polo e representante comercial.</div>
+        <div class="by">{nivel.id === 'pos-graduacao' ? 'Certificado emitido pela UNIFAEL' : parceira.selo}. A AURA é polo e representante comercial.</div>
       </aside>
     </div>
   </section>
@@ -81,6 +86,29 @@ const faqLd = {
               </>
             ))}
           </>
+        ) : nivel.id === 'pos-graduacao' ? (
+          <>
+            <div class="blk-h"><span class="kick">{lista.length} cursos · 100% online</span><h2>Encontre a sua especialização ou MBA</h2><p>Valores de {vigenciaPosTexto}, no boleto com pagamento até o dia 8. Busque pelo nome ou filtre por área e duração.</p></div>
+            <label class="cat-search">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <span class="sr-only">Buscar pós-graduação</span>
+              <input type="search" id="pos-q" placeholder="Ex.: psicopedagogia, gestão de pessoas, direito" autocomplete="off" />
+            </label>
+            <div class="filters small" role="group" aria-label="Filtrar por área">
+              <span class="lbl">Área</span>
+              <button type="button" data-area="" aria-pressed="true">Todas</button>
+              {areasPos.map(([id, n]) => <button type="button" data-area={id} aria-pressed="false">{areas[id].nome} <small>({n})</small></button>)}
+            </div>
+            <div class="filters small" role="group" aria-label="Filtrar por duração">
+              <span class="lbl">Duração</span>
+              <button type="button" data-meses="" aria-pressed="true">Todas</button>
+              {[4, 6, 12].map((m) => <button type="button" data-meses={m} aria-pressed="false">{m} meses</button>)}
+            </div>
+            <p class="count" id="pos-count" aria-live="polite">{lista.length} cursos</p>
+            <div class="courses" id="pos-list">{lista.map((c, i) => <CourseCard curso={c} idx={i} />)}</div>
+            <p class="empty" id="pos-empty" hidden>Nenhum curso com esse filtro. A Aurora pode procurar para você no WhatsApp.</p>
+            <p class="disclaimer">Valores de {vigenciaPosTexto} para matrícula pelo polo AURA em Balneário Camboriú, sujeitos à disponibilidade de bolsas. No cartão de crédito a mensalidade é um pouco maior. Confirme a condição do dia com a Aurora.</p>
+          </>
         ) : (
           <>
             <div class="blk-h"><span class="kick">Cursos disponíveis</span><h2>Escolha seu curso</h2></div>
@@ -99,4 +127,38 @@ const faqLd = {
       </div>
     </div>
   </section>
+
+  {nivel.id === 'pos-graduacao' && (
+    <script>
+      const q = document.getElementById('pos-q') as HTMLInputElement;
+      const cards = Array.from(document.querySelectorAll<HTMLElement>('#pos-list .co'));
+      const aBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('button[data-area]'));
+      const mBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('button[data-meses]'));
+      const count = document.getElementById('pos-count')!;
+      const empty = document.getElementById('pos-empty')!;
+      const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+      const params = new URLSearchParams(location.search);
+      let area = params.get('area') ?? '';
+      let meses = params.get('meses') ?? '';
+      q.value = params.get('q') ?? '';
+      function apply() {
+        const terms = norm(q.value.trim()).split(/\s+/).filter(Boolean);
+        let n = 0;
+        for (const c of cards) {
+          const nome = norm(c.dataset.nome || '');
+          const ok = (!area || c.dataset.area === area) && (!meses || c.dataset.meses === meses) && terms.every((t) => nome.includes(t));
+          c.hidden = !ok;
+          if (ok) n++;
+        }
+        count.textContent = n === 1 ? '1 curso' : `${n} cursos`;
+        empty.hidden = n > 0;
+        aBtns.forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.area || '') === area)));
+        mBtns.forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.meses || '') === meses)));
+      }
+      aBtns.forEach((b) => b.addEventListener('click', () => { area = b.dataset.area || ''; apply(); }));
+      mBtns.forEach((b) => b.addEventListener('click', () => { meses = b.dataset.meses || ''; apply(); }));
+      q.addEventListener('input', apply);
+      apply();
+    </script>
+  )}
 </Base>

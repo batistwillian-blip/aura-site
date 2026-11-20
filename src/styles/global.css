@@ -239,6 +239,21 @@ ul { margin: 0; padding: 0; list-style: none; }
 .cat-search { display: flex; align-items: center; gap: 10px; background: #F6F5FA; border-radius: 12px; padding: 0 14px; margin-bottom: 16px; max-width: 520px; color: #8a879a; }
 .cat-search input { border: 0; background: transparent; font: inherit; font-size: 16px; padding: 13px 0; width: 100%; outline: none; color: var(--txt); }
 .empty { color: var(--txt2); padding: 24px 0; }
+.filters.small button { font-size: 13px; padding: 7px 13px; }
+.filters .lbl { font-size: 12px; font-weight: 800; color: var(--txt2); text-transform: uppercase; letter-spacing: .06em; align-self: center; margin-right: 4px; }
+.count { font-size: 14px; color: var(--txt2); margin: -4px 0 18px; }
+
+/* pós: preço e disciplinas */
+.co .price { font-size: 14px; color: var(--txt2); }
+.co .price b { color: var(--brand-ink); font-size: 17px; font-weight: 800; }
+.disc { display: flex; flex-wrap: wrap; gap: 8px; }
+.disc li { background: #F6F5FA; border-radius: 10px; padding: 7px 12px; font-size: 14.5px; color: var(--txt); }
+.invest { display: grid; gap: 6px; background: var(--lav, #F2EDFF); border-radius: 14px; padding: 14px 16px; }
+.invest .v { font-size: 26px; font-weight: 800; color: var(--brand-ink); letter-spacing: -.02em; line-height: 1.1; }
+.invest .v small { font-size: 14px; font-weight: 700; color: var(--txt2); }
+.invest p { font-size: 13.5px !important; color: var(--txt2); }
+.alt-version { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
+.alt-version a { font-weight: 800; color: var(--brand); }
 
 /* rodapé */
 .foot { background: var(--foot); color: #c9c4dd; font-size: 14px; }
