@@ -30,7 +30,8 @@ const courseLd = {
 };
 ---
 <Base title={curso.nome} description={`${curso.resumo} ${parceira.selo}. Matrícula com a AURA em Balneário Camboriú.`} waMessage={msg} jsonLd={courseLd}>
-  <section class="page-hero">
+  <section class="page-hero tech">
+    <span class="luz" aria-hidden="true"></span>
     <div class="container">
       <nav class="crumbs" aria-label="Você está em"><a href="/">Início</a><span>›</span><a href={`/${nivel.id}/`}>{nivel.titulo}</a><span>›</span><span>{curso.nome}</span></nav>
       <span class="kick">{curso.categoria}{curso.destaqueBC ? ' · Destaque em BC' : ''}</span>
