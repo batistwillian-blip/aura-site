@@ -63,3 +63,11 @@ Cada curso tem uma `area` (veja `src/data/areas.ts`), e a foto do card vem de `s
 - Trocar os blocos de cor por fotos reais (polo, equipe, alunos).
 - Confirmar valores e condições com as parceiras antes de anunciar.
 - Conferir as regras de uso das marcas UNIFAEL, CEFE Educa e AGTU.
+
+## Teste vocacional
+
+Fica em `public/teste-vocacional/index.html`, uma página única servida como está, e é gerado por `node scripts/vocacional/gerar.mjs scripts/vocacional/original-unifael.html`. O gerador parte da versão original e troca só o visual (`scripts/vocacional/aura.css`) e os textos de marca. As perguntas, os pesos, o Pixel, os webhooks do n8n e o WhatsApp ficam idênticos.
+
+- No site: `/teste-vocacional/`. A home e o rodapé apontam para lá, com UTM.
+- No subdomínio: o `server.mjs` responde `vocacional.aurasc.com.br/` com o teste. Para usar, aponte o domínio `vocacional.aurasc.com.br` para este app no Easypanel.
+- O lead e o Pixel só disparam em `*.aurasc.com.br`. Em localhost aparece a faixa de pré-visualização.

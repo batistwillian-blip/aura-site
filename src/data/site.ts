@@ -16,7 +16,7 @@ export const site = {
   razaoSocial: 'AURA Consultoria e Educação Ltda.',
   fundacao: 2019,
   /** Teste vocacional (página própria, termina no WhatsApp da Aurora). */
-  vocacionalUrl: 'https://vocacional.aurasc.com.br/',
+  vocacionalUrl: '/teste-vocacional/',
   gtmId: (import.meta.env.PUBLIC_GTM_ID ?? '').trim(),
   metaPixelId: (import.meta.env.PUBLIC_META_PIXEL_ID ?? '').replace(/\D/g, ''),
 };

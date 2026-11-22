@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Descubra sua vocação | Teste gratuito UNIFAEL Balneário Camboriú</title>
+<meta name="description" content="Descubra em 2 minutos qual faculdade combina com você. Teste vocacional gratuito com resultado na hora. UNIFAEL, polo Balneário Camboriú.">
+<meta property="og:title" content="Você já sabe o que quer pra sua vida? Descubra sua vocação em 2 minutos">
+<meta property="og:description" content="Teste vocacional gratuito, resultado na hora. UNIFAEL Balneário Camboriú.">
+<meta name="theme-color" content="#0b5132">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --verde:#0b5132; --verde2:#0f6b42; --lima:#c6f25c; --lima2:#e6fbb0;
+  --tinta:#10231a; --cinza:#5b6b63; --linha:#e3ebe6; --fundo:#f5f8f4; --branco:#fff;
+  --sombra:0 10px 30px -12px rgba(11,81,50,.25);
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--tinta);background:var(--fundo);line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+input,select{font:inherit;color:inherit}
+.app{max-width:520px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.topo{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 8px}
+.marca{display:flex;align-items:center;gap:8px;white-space:nowrap;font-weight:800;letter-spacing:.06em;color:var(--verde);font-size:15px}
+.marca i{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--verde);color:var(--lima);font-style:normal;font-size:15px}
+.marca small{font-weight:600;letter-spacing:0;color:var(--cinza);font-size:11.5px}
+.voltar{width:56px;white-space:nowrap;text-align:left;font-size:14px;color:var(--cinza);padding:6px 4px;visibility:hidden}
+.voltar.on{visibility:visible}
+.barra{height:6px;background:var(--linha);border-radius:99px;margin:6px 20px 0;overflow:hidden;opacity:0;transition:opacity .3s}
+.barra.on{opacity:1}
+.barra b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--verde2),#5fc46b);border-radius:99px;transition:width .45s cubic-bezier(.2,.8,.2,1)}
+.tela{display:none;flex:1;flex-direction:column;padding:18px 20px 28px;animation:entra .4s cubic-bezier(.2,.8,.2,1)}
+.tela.on{display:flex}
+@keyframes entra{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* capa */
+.capa{background:radial-gradient(120% 90% at 100% 0%,#1b8a55 0%,var(--verde) 45%,#07391f 100%);color:#fff;border-radius:26px;padding:30px 24px 26px;position:relative;overflow:hidden;box-shadow:var(--sombra)}
+.capa:after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:38px solid rgba(198,242,92,.14)}
+.selo{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:6px 12px;border-radius:99px;font-size:12.5px;font-weight:600}
+.capa h1{font-size:31px;line-height:1.12;font-weight:800;margin:18px 0 12px;letter-spacing:-.02em;position:relative}
+.capa h1 em{font-style:normal;color:var(--lima)}
+.capa p{color:rgba(255,255,255,.86);font-size:16px;position:relative}
+.pontos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:22px 0 4px;position:relative}
+.pontos div{background:rgba(255,255,255,.1);border-radius:14px;padding:10px 8px;text-align:center;font-size:12px;color:rgba(255,255,255,.9)}
+.pontos strong{display:block;font-size:18px;color:#fff}
+.btn{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:17px 20px;border-radius:16px;font-weight:700;font-size:17px;transition:transform .15s,box-shadow .2s,background .2s}
+.btn:active{transform:scale(.98)}
+.btn-lima{background:var(--lima);color:var(--verde);box-shadow:0 10px 24px -10px rgba(198,242,92,.9)}
+.btn-verde{background:var(--verde);color:#fff;box-shadow:var(--sombra)}
+.btn-verde:disabled{opacity:.5}
+.pulsa{animation:pulsa 1.8s ease-in-out infinite}@keyframes pulsa{0%,100%{box-shadow:0 0 0 0 rgba(31,174,91,.55)}60%{box-shadow:0 0 0 14px rgba(31,174,91,0)}}
+.btn-zap{background:#1fae5b;color:#fff;box-shadow:0 12px 26px -12px rgba(31,174,91,.9);font-size:17.5px}
+.capa .btn{margin-top:22px;position:relative}
+.nota{font-size:12.5px;color:var(--cinza);text-align:center;margin-top:14px}
+.prova{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+.prova > div{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--linha);border-radius:16px;padding:14px 16px;font-size:14.5px}
+.prova > div > span{font-size:20px;line-height:1}
+
+/* pergunta */
+.contador{font-size:13px;font-weight:700;color:var(--verde2);letter-spacing:.04em;text-transform:uppercase}
+.tela h2{font-size:24px;line-height:1.2;font-weight:800;margin:8px 0 18px;letter-spacing:-.015em}
+.tela h2 small{display:block;font-size:14.5px;font-weight:500;color:var(--cinza);margin-top:6px;letter-spacing:0}
+.opcoes{display:flex;flex-direction:column;gap:10px}
+.op{display:flex;align-items:center;gap:14px;text-align:left;background:#fff;border:2px solid var(--linha);border-radius:var(--r);padding:14px 16px;font-size:15.5px;font-weight:600;transition:border-color .15s,background .15s,transform .12s}
+.op:hover{border-color:#b9d9c6}
+.op:active{transform:scale(.985)}
+.op .ic{flex:none;width:42px;height:42px;border-radius:12px;background:var(--fundo);display:grid;place-items:center;font-size:22px}
+.op.sel{border-color:var(--verde2);background:#eef8f1}
+.op.sel .ic{background:var(--lima2)}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grade .op{flex-direction:column;align-items:flex-start;gap:10px;padding:14px}
+
+/* formulário */
+.campo{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.campo label{font-size:14px;font-weight:700}
+.campo input,.campo select{width:100%;padding:15px 16px;border:2px solid var(--linha);border-radius:14px;background:#fff;font-size:16px;outline:none;transition:border-color .15s}
+.campo input:focus,.campo select:focus{border-color:var(--verde2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 14px;border:2px solid var(--linha);border-radius:99px;background:#fff;font-size:14px;font-weight:600}
+.chip.sel{border-color:var(--verde2);background:#eef8f1;color:var(--verde)}
+.erro{color:#b42318;font-size:13.5px;font-weight:600;min-height:18px;margin:-4px 0 8px}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+.cadeado{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;color:var(--cinza);margin-top:12px}
+.rodape-tela{margin-top:auto;padding-top:18px}
+
+/* carregando */
+.analise{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px}
+.orbita{width:96px;height:96px;border-radius:50%;border:6px solid var(--linha);border-top-color:var(--verde2);animation:gira 1s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.analise p{color:var(--cinza);font-weight:600;min-height:22px}
+
+/* resultado */
+.res-topo{background:radial-gradient(120% 90% at 100% 0%,#1b8a55 0%,var(--verde) 50%,#07391f 100%);color:#fff;border-radius:26px;padding:26px 22px;box-shadow:var(--sombra);position:relative;overflow:hidden}
+.res-topo .emoji{font-size:44px;line-height:1}
+.res-topo .rot{font-size:13px;font-weight:700;color:var(--lima);text-transform:uppercase;letter-spacing:.06em;margin-top:12px}
+.res-topo h2{color:#fff;margin:4px 0 8px;font-size:28px}
+.res-topo p{color:rgba(255,255,255,.88);font-size:15px}
+.tracos{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tracos span{background:rgba(255,255,255,.13);border-radius:99px;padding:6px 11px;font-size:12.5px;font-weight:600}
+.secao{font-size:13px;font-weight:800;color:var(--cinza);text-transform:uppercase;letter-spacing:.06em;margin:26px 0 12px}
+.afin{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--linha);border-radius:18px;padding:16px}
+.afin .l{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:5px}
+.afin .t{height:8px;border-radius:99px;background:var(--linha);overflow:hidden}
+.afin .t b{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--verde2),#5fc46b);width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.cursos{display:flex;flex-direction:column;gap:12px}
+.curso{background:#fff;border:1px solid var(--linha);border-radius:20px;padding:18px;position:relative}
+.curso.top{border:2px solid var(--verde2);box-shadow:var(--sombra)}
+.curso .badge{position:absolute;top:-11px;left:16px;background:var(--lima);color:var(--verde);font-size:11.5px;font-weight:800;padding:4px 10px;border-radius:99px;letter-spacing:.03em}
+.curso h3{font-size:18px;line-height:1.25;margin-bottom:8px}
+.curso .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.curso .meta span{font-size:12.5px;font-weight:600;background:var(--fundo);border-radius:8px;padding:5px 9px;color:var(--verde)}
+.curso p{font-size:14px;color:var(--cinza)}
+.preco{display:block;margin-top:12px;padding-top:12px;border-top:1px dashed var(--linha);font-size:13.5px;color:var(--cinza)}
+.preco strong{font-size:20px;color:var(--verde);font-weight:800}
+.aviso{background:#fff8e6;border:1px solid #f3dc9b;border-radius:16px;padding:14px 16px;font-size:14px;margin-top:16px}
+.cta-final{position:sticky;bottom:0;padding:14px 0 calc(6px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(245,248,244,0),var(--fundo) 30%);margin-top:20px}
+.cta-final .nota{margin-top:8px}
+.previa{background:#10231a;color:#e6fbb0;font-size:12px;text-align:center;padding:6px 10px;font-weight:600}
+@media (min-width:560px){.capa h1{font-size:36px}}
+</style>
+</head>
+<body>
+<div class="previa" id="previa" hidden>Pré-visualização: o botão do WhatsApp funciona, mas o lead não é gravado no painel.</div>
+<div class="app">
+  <header class="topo">
+    <button class="voltar" id="voltar" type="button" aria-label="Voltar">← Voltar</button>
+    <div class="marca" id="marca">UNIFAEL <small>· Polo BC</small></div>
+    <span style="width:56px"></span>
+  </header>
+  <div class="barra" id="barra"><b id="barraFill"></b></div>
+
+  <!-- CAPA -->
+  <section class="tela on" id="t-capa">
+    <div class="capa">
+      <span class="selo">✨ Teste de vocação gratuito</span>
+      <h1>Você já sabe o que <em>quer pra sua vida?</em></h1>
+      <p>Responda 8 perguntas rápidas sobre quem você é e descubra a sua vocação: seu perfil, seus talentos e os caminhos que combinam com você.</p>
+      <div class="pontos">
+        <div><strong>2 min</strong>para fazer</div>
+        <div><strong>100%</strong>gratuito</div>
+        <div><strong>Na hora</strong>sua vocação</div>
+      </div>
+      <button class="btn btn-lima" type="button" id="comecar">Descobrir minha vocação →</button>
+    </div>
+    <div class="prova">
+      <div><span>🧭</span><div><strong>Sem certo ou errado.</strong> É só responder com sinceridade: o teste cruza seus interesses, seu jeito e seus objetivos.</div></div>
+      <div><span>🎯</span><div><strong>No resultado</strong> você vê seu perfil, seus pontos fortes e as profissões e cursos que têm a ver com você.</div></div>
+      <div><span>💬</span><div>No final, se quiser, você tira dúvidas do seu resultado com a nossa consultora pelo WhatsApp.</div></div>
+    </div>
+    <p class="nota">Leva menos tempo que um café ☕ · Um teste da UNIFAEL Balneário Camboriú</p>
+  </section>
+
+  <!-- PERGUNTAS (geradas) -->
+  <section class="tela" id="t-pergunta">
+    <span class="contador" id="contador"></span>
+    <h2 id="pergunta"></h2>
+    <div class="opcoes" id="opcoes"></div>
+  </section>
+
+  <!-- SOBRE VOCÊ -->
+  <section class="tela" id="t-sobre">
+    <span class="contador">Quase lá</span>
+    <h2>Agora um pouco sobre você<small>Isso ajuda a indicar o caminho certo pra sua realidade.</small></h2>
+    <div class="campo">
+      <label>Até onde você estudou?</label>
+      <div class="chips" data-campo="escolaridade">
+        <button type="button" class="chip" data-v="medio_completo">Terminei o ensino médio</button>
+        <button type="button" class="chip" data-v="medio_cursando">Estou no ensino médio</button>
+        <button type="button" class="chip" data-v="medio_incompleto">Não terminei o ensino médio</button>
+        <button type="button" class="chip" data-v="superior_incompleto">Comecei faculdade e parei</button>
+        <button type="button" class="chip" data-v="superior_completo">Já tenho graduação</button>
+      </div>
+    </div>
+    <div class="campo">
+      <label>Sua idade</label>
+      <div class="chips" data-campo="idade">
+        <button type="button" class="chip" data-v="até 20">Até 20</button>
+        <button type="button" class="chip" data-v="21 a 29">21 a 29</button>
+        <button type="button" class="chip" data-v="30 a 39">30 a 39</button>
+        <button type="button" class="chip" data-v="40 a 49">40 a 49</button>
+        <button type="button" class="chip" data-v="50+">50+</button>
+      </div>
+    </div>
+    <div class="campo">
+      <label for="cidade">Onde você mora hoje?</label>
+      <select id="cidade">
+        <option value="">Escolha sua cidade</option>
+        <option>Balneário Camboriú</option><option>Camboriú</option><option>Itajaí</option>
+        <option>Itapema</option><option>Navegantes</option><option>Porto Belo</option>
+        <option>Bombinhas</option><option>Tijucas</option><option>Brusque</option>
+        <option>Penha</option><option>Balneário Piçarras</option><option>Gaspar</option><option>Ilhota</option>
+        <option>Outra cidade</option>
+      </select>
+    </div>
+    <div class="erro" id="erroSobre"></div>
+    <div class="rodape-tela"><button class="btn btn-verde" type="button" id="seguirSobre">Continuar →</button></div>
+  </section>
+
+  <!-- OBJETIVO -->
+  <section class="tela" id="t-objetivo">
+    <span class="contador">Última etapa</span>
+    <h2>O que você quer com uma faculdade?</h2>
+    <div class="campo">
+      <div class="chips" data-campo="objetivo">
+        <button type="button" class="chip" data-v="Crescer onde já trabalho">📈 Crescer onde trabalho</button>
+        <button type="button" class="chip" data-v="Mudar de área">🔄 Mudar de área</button>
+        <button type="button" class="chip" data-v="Ter meu primeiro diploma">🎓 Meu primeiro diploma</button>
+        <button type="button" class="chip" data-v="Passar em concurso">🏛️ Passar em concurso</button>
+        <button type="button" class="chip" data-v="Abrir meu negócio">🚀 Abrir meu negócio</button>
+        <button type="button" class="chip" data-v="Ganhar mais">💰 Ganhar mais</button>
+      </div>
+    </div>
+    <div class="campo">
+      <label>Quando você gostaria de começar?</label>
+      <div class="chips" data-campo="prazo">
+        <button type="button" class="chip" data-v="O quanto antes">⚡ O quanto antes</button>
+        <button type="button" class="chip" data-v="No próximo semestre">📅 Próximo semestre</button>
+        <button type="button" class="chip" data-v="Ainda estou pesquisando">🔎 Só pesquisando</button>
+      </div>
+    </div>
+    <div class="erro" id="erroObjetivo"></div>
+    <div class="rodape-tela"><button class="btn btn-verde" type="button" id="seguirObjetivo">Ver meu resultado →</button></div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="tela" id="t-contato">
+    <span class="contador">✅ Seu resultado está pronto</span>
+    <h2>Para onde enviamos seu resultado?<small>Ele aparece aqui na tela e fica salvo para você conversar sobre ele no WhatsApp.</small></h2>
+    <form id="formContato" novalidate>
+      <div class="campo"><label for="nome">Seu nome</label><input id="nome" autocomplete="given-name" placeholder="Como podemos te chamar?" maxlength="60"></div>
+      <div class="campo"><label for="zap">Seu WhatsApp com DDD</label><input id="zap" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(47) 9 9999-9999" maxlength="16"></div>
+      <input class="hp" id="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="erro" id="erroContato"></div>
+      <button class="btn btn-verde" type="submit" id="verResultado">Ver meu resultado 🎉</button>
+      <div class="cadeado"><span>🔒</span><span>Seus dados ficam só com a UNIFAEL Balneário Camboriú. Ao continuar, você aceita receber o resultado e o contato da nossa equipe pelo WhatsApp. Nada de spam.</span></div>
+    </form>
+  </section>
+
+  <!-- ANALISANDO -->
+  <section class="tela" id="t-analise">
+    <div class="analise"><div class="orbita"></div><h2 style="margin:0">Analisando suas respostas…</h2><p id="analiseTxt">Cruzando seus interesses</p></div>
+  </section>
+
+  <!-- RESULTADO -->
+  <section class="tela" id="t-resultado">
+    <div class="res-topo" id="resTopo"></div>
+    <div class="secao">Suas afinidades</div>
+    <div class="afin" id="afin"></div>
+    <div class="secao">Cursos que combinam com você</div>
+    <div class="cursos" id="listaCursos"></div>
+    <div id="avisoExtra"></div>
+    <div class="cta-final">
+      <a class="btn btn-zap pulsa" id="btnZap" href="#" target="_blank" rel="noopener">💬 Receber meu resultado no WhatsApp</a>
+      <p class="nota">Toque no botão: nossa consultora te explica seu resultado, cada curso e os valores. Sem compromisso.</p>
+    </div>
+    <p class="nota" style="margin-top:6px">*Valores de referência da UNIFAEL para o polo de Balneário Camboriú; podem mudar. Consulte as condições.</p>
+  </section>
+</div>
+
+<script>
+(function(){
+'use strict';
+var PIXEL = '766165402478485';
+var API = 'https://n8n.aurasc.com.br/webhook/';
+var ZAP = '554735148552';
+var host = location.hostname || '';
+var REAL = /aurasc[.]com[.]br$/.test(host);
+if (!REAL) document.getElementById('previa').hidden = false;
+
+/* ---------- Pixel do Meta (só no site oficial) ---------- */
+function px(){ try { if (window.fbq) window.fbq.apply(null, arguments); } catch(e){} }
+if (REAL) {
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  px('init', PIXEL); px('track', 'PageView');
+}
+
+/* ---------- Cursos (atualizados do servidor quando possível) ---------- */
+var CURSOS = {
+ adm:{n:'Administração',t:'Bacharelado',m:'EAD',d:'4 anos',p:'184,26',x:'Liderança, gestão de equipes, finanças e estratégia para qualquer tipo de empresa.'},
+ pg:{n:'Processos Gerenciais',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Formação rápida para organizar, melhorar processos e assumir cargos de gestão.'},
+ gc:{n:'Gestão Comercial',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Vendas, negociação, relacionamento com clientes e estratégias de mercado.'},
+ ni:{n:'Negócios Imobiliários',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'137,81',x:'Compra, venda, locação e avaliação de imóveis, num dos mercados mais fortes de BC.'},
+ gq:{n:'Gestão da Qualidade',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Melhoria contínua, padrões e processos eficientes na indústria e nos serviços.'},
+ rh:{n:'Gestão de Recursos Humanos',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Recrutamento, desenvolvimento e gestão de pessoas dentro das empresas.'},
+ mkt:{n:'Marketing',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Marketing digital, marcas, redes sociais e comportamento do consumidor.'},
+ ped:{n:'Pedagogia',t:'Licenciatura',m:'Semipresencial',d:'4 anos',p:'181,20',x:'Educação infantil, anos iniciais, gestão escolar e projetos educacionais.'},
+ teo:{n:'Teologia',t:'Bacharelado',m:'EAD',d:'3 anos',p:'98,99',x:'Estudo das Escrituras, das religiões e da reflexão teológica.'},
+ gf:{n:'Gestão Financeira',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Planejamento, controle e decisões financeiras nas empresas.'},
+ cc:{n:'Ciências Contábeis',t:'Bacharelado',m:'EAD',d:'4 anos',p:'184,26',x:'Contabilidade, impostos, auditoria e perícia, com alta procura no mercado.'},
+ eco:{n:'Ciências Econômicas',t:'Bacharelado',m:'EAD',d:'4 anos',p:'184,26',x:'Mercado financeiro, análise econômica e consultoria.'},
+ ads:{n:'Análise e Desenvolvimento de Sistemas',t:'Tecnólogo',m:'EAD',d:'2 anos e meio',p:'145,48',x:'Programação, criação de sistemas e apps. Uma das áreas que mais contratam.'},
+ gti:{n:'Gestão da Tecnologia da Informação',t:'Tecnólogo',m:'EAD',d:'2 anos e meio',p:'145,48',x:'Tecnologia e gestão juntas: projetos, infraestrutura e equipes de TI.'},
+ bd:{n:'Banco de Dados',t:'Tecnólogo',m:'EAD',d:'2 anos e meio',p:'126,53',x:'Organização e análise de dados, base da inteligência das empresas.'},
+ si:{n:'Segurança da Informação',t:'Tecnólogo',m:'EAD',d:'2 anos e meio',p:'126,53',x:'Proteção de sistemas e dados contra ameaças digitais.'},
+ lp:{n:'Letras – Português',t:'Licenciatura',m:'Semipresencial',d:'4 anos',p:'166,31',x:'Ensino de língua portuguesa e literatura, revisão e produção de textos.'},
+ li:{n:'Letras – Inglês',t:'Licenciatura',m:'Semipresencial',d:'4 anos',p:'166,31',x:'Ensino de inglês em escolas e cursos de idiomas.'},
+ mat:{n:'Matemática',t:'Licenciatura',m:'Semipresencial',d:'4 anos',p:'192,58',x:'Professor de matemática, com alta demanda nas escolas.'},
+ his:{n:'História',t:'Licenciatura',m:'Semipresencial',d:'4 anos',p:'192,93',x:'Ensino de história na educação básica e projetos culturais.'},
+ ee:{n:'Educação Especial',t:'Licenciatura',m:'Semipresencial',d:'4 anos',p:'166,31',x:'Educação inclusiva para estudantes com diferentes necessidades.'},
+ bio:{n:'Ciências Biológicas',t:'Licenciatura',m:'Semipresencial',d:'4 anos',p:'205,54',x:'Professor de biologia e ciências, com aulas práticas no polo.'},
+ efb:{n:'Educação Física (Bacharelado)',t:'Bacharelado',m:'Semipresencial',d:'4 anos',p:'302,95',x:'Academias, treinamento, esporte e saúde.'},
+ efl:{n:'Educação Física (Licenciatura)',t:'Licenciatura',m:'Semipresencial',d:'4 anos',p:'302,95',x:'Professor de educação física nas escolas.'},
+ nut:{n:'Nutrição',t:'Bacharelado',m:'Semipresencial',d:'4 anos',p:'335,02',x:'Alimentação, saúde e bem-estar, em clínicas, esportes e empresas.'},
+ fis:{n:'Fisioterapia',t:'Bacharelado',m:'Semipresencial',d:'5 anos',p:'340,70',x:'Reabilitação e prevenção, com aulas práticas presenciais.'},
+ bmd:{n:'Biomedicina',t:'Bacharelado',m:'Semipresencial',d:'4 anos',p:'343,54',x:'Análises clínicas, diagnóstico e pesquisa em saúde.'},
+ far:{n:'Farmácia',t:'Bacharelado',m:'Semipresencial',d:'5 anos',p:'335,02',x:'Medicamentos, análises e farmácia clínica.'},
+ est:{n:'Estética e Cosmética',t:'Tecnólogo',m:'Semipresencial',d:'2 anos e meio',p:'328,86',x:'Procedimentos estéticos, cuidados com a pele e bem-estar.'},
+ gp:{n:'Gestão Pública',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Administração pública, políticas e serviços. Ótimo para concursos.'},
+ sp:{n:'Segurança Pública',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Planejamento e gestão da segurança. Muito procurado por quem quer concurso.'},
+ sjn:{n:'Serviços Judiciais e Notariais',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Rotina de cartórios, fóruns e escritórios jurídicos.'},
+ tra:{n:'Gestão de Trânsito',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Mobilidade, legislação e segurança viária.'},
+ log:{n:'Logística',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Transporte, estoques e cadeia de suprimentos. Forte na região do porto de Itajaí.'},
+ amb:{n:'Gestão Ambiental',t:'Tecnólogo',m:'Semipresencial',d:'2 anos',p:'188,50',x:'Sustentabilidade, licenciamento e controle ambiental.'},
+ aer:{n:'Ciências Aeronáuticas',t:'Bacharelado',m:'EAD',d:'3 anos',p:'320,17',x:'Aviação civil, operações e gestão no setor aéreo.'},
+ di:{n:'Design de Interiores',t:'Tecnólogo',m:'EAD',d:'2 anos',p:'145,48',x:'Projetos de ambientes, decoração e soluções criativas para espaços.'}
+};
+var MAPA_NOMES = {adm:'Administração',pg:'Processos Gerenciais',gc:'Gestão Comercial',ni:'Negócios Imobiliários',gq:'Gestão da Qualidade',rh:'Recursos Humanos',mkt:'Marketing',ped:'Pedagogia',teo:'Teologia',gf:'Gestão Financeira',cc:'Ciências Contábeis',eco:'Econômica',ads:'Análise e Desenvolvimento',gti:'Gestão da Tecnologia',bd:'Bancos de Dados',si:'Segurança da Informação',lp:'Letras - Português',li:'Letras - Inglês',mat:'Matemática',his:'História',ee:'Educação Especial',bio:'Ciências Biológicas',efb:'Bacharelado em Educação Física',efl:'Licenciatura em Educação Física',nut:'Nutrição',fis:'Fisioterapia',bmd:'Biomedicina',far:'Farmácia',est:'Estética',gp:'Gestão Pública',sp:'Segurança Pública',sjn:'Judiciais',tra:'Trânsito',log:'Logística',amb:'Ambiental',aer:'Aeronáuticas',di:'Design de Interiores'};
+function atualizaCursos(){
+  if (!REAL || !window.fetch) return;
+  fetch(API + 'vocacional-cursos').then(function(r){ return r.json(); }).then(function(d){
+    if (!d || !d.cursos) return;
+    Object.keys(MAPA_NOMES).forEach(function(k){
+      var alvo = MAPA_NOMES[k].toLowerCase();
+      var c = d.cursos.find(function(x){ return String(x.curso).toLowerCase().indexOf(alvo) >= 0; });
+      if (!c) return;
+      if (c.regra === 'nao_vender') { delete CURSOS[k]; return; }
+      var por = String(c.mensalidade_por || '').replace('R$','').trim();
+      if (por) CURSOS[k].p = por;
+      if (c.duracao) CURSOS[k].d = c.duracao;
+    });
+  }).catch(function(){});
+}
+atualizaCursos();
+
+/* ---------- Perfis ---------- */
+var PERFIS = {
+ G:{nome:'Perfil Gestor',em:'🧭',txt:'Você gosta de organizar, decidir e fazer as coisas acontecerem. Tem visão de negócio e leva jeito para liderar pessoas e projetos.',tracos:['Liderança','Visão de negócio','Tomada de decisão'],cursos:['adm','pg','gc','ni']},
+ P:{nome:'Perfil Pessoas',em:'🤝',txt:'Você se conecta fácil, percebe o que os outros sentem e sabe motivar. Sua força está em lidar com gente.',tracos:['Empatia','Comunicação','Trabalho em equipe'],cursos:['rh','mkt','ped','teo']},
+ N:{nome:'Perfil Analítico',em:'📊',txt:'Números não te assustam: você gosta de lógica, de planejar e de entender onde o dinheiro está indo.',tracos:['Raciocínio lógico','Organização','Precisão'],cursos:['gf','cc','eco']},
+ T:{nome:'Perfil Tech',em:'💻',txt:'Você é curioso com tecnologia e resolve problemas no computador. É a área que mais contrata, inclusive em home office.',tracos:['Curiosidade','Solução de problemas','Pensamento lógico'],cursos:['ads','gti','bd','si']},
+ E:{nome:'Perfil Educador',em:'📚',txt:'Você tem paciência para explicar e sente prazer em ver alguém aprender. Ensinar é a sua forma de transformar vidas.',tracos:['Didática','Paciência','Propósito'],cursos:['ped','lp','li','mat','his','ee','bio']},
+ S:{nome:'Perfil Saúde e Movimento',em:'💪',txt:'Você se importa com o bem-estar, com o corpo e com a qualidade de vida das pessoas.',tracos:['Cuidado','Energia','Bem-estar'],cursos:['efb','efl','nut','est','fis','bmd','far']},
+ J:{nome:'Perfil Público e Justiça',em:'⚖️',txt:'Você valoriza regras claras, ética e estabilidade. Tem o perfil de quem brilha no serviço público e em concursos.',tracos:['Ética','Responsabilidade','Estabilidade'],cursos:['gp','sp','sjn','tra']},
+ O:{nome:'Perfil Operações',em:'🚢',txt:'Você gosta de ver as coisas funcionando no prazo e no lugar certo. Planeja, coordena e não deixa nada se perder.',tracos:['Planejamento','Organização','Visão prática'],cursos:['log','gq','amb','aer']},
+ C:{nome:'Perfil Criativo',em:'🎨',txt:'Você pensa diferente, gosta de criar e de deixar tudo mais bonito e interessante.',tracos:['Criatividade','Estética','Comunicação visual'],cursos:['mkt','di','est']}
+};
+var ROTULO = {G:'Gestão e negócios',P:'Pessoas e comunicação',N:'Números e finanças',T:'Tecnologia',E:'Educação',S:'Saúde e bem-estar',J:'Serviço público e justiça',O:'Operações e logística',C:'Criatividade'};
+
+/* ---------- Perguntas ---------- */
+var PERGUNTAS = [
+ {q:'Num sábado livre, o que mais te anima?',o:[
+  ['🎉','Organizar um evento ou um rolê com a galera',{G:2,P:1}],
+  ['🎮','Fuçar em apps, games e configurações do celular',{T:2}],
+  ['🏃','Treinar, cuidar do corpo ou cozinhar algo saudável',{S:2}],
+  ['📖','Ajudar alguém a estudar ou aprender algo',{E:2,P:1}],
+  ['🛋️','Mudar a decoração, criar conteúdo, inventar algo',{C:2}]]},
+ {q:'Num trabalho em grupo, você normalmente é quem…',o:[
+  ['👑','Lidera e divide as tarefas',{G:2}],
+  ['🧮','Cuida das contas e do orçamento',{N:2}],
+  ['🛠️','Resolve a parte técnica',{T:2}],
+  ['🫶','Mantém todo mundo unido e motivado',{P:2,E:1}],
+  ['⏱️','Garante que prazos e regras sejam cumpridos',{O:2,J:1}]]},
+ {q:'Qual dessas notícias você clicaria primeiro?',o:[
+  ['💸','"Como investir ganhando pouco"',{N:2,G:1}],
+  ['🤖','"Nova inteligência artificial muda o mercado"',{T:2}],
+  ['🏫','"Escolas de SC procuram professores"',{E:2}],
+  ['🏛️','"Abertas inscrições para concurso público"',{J:2}],
+  ['🚢','"Porto de Itajaí bate recorde de cargas"',{O:2}]]},
+ {q:'Qual ambiente de trabalho tem mais a sua cara?',grade:true,o:[
+  ['🏢','Escritório de uma empresa crescendo',{G:2,N:1}],
+  ['🍎','Escola ou sala de aula',{E:2}],
+  ['🩺','Clínica, academia ou hospital',{S:2}],
+  ['🏠','Home office, só eu e o computador',{T:2,C:1}],
+  ['⚖️','Órgão público, fórum ou cartório',{J:2}],
+  ['✈️','Porto, aeroporto ou transportadora',{O:2}]]},
+ {q:'Qual elogio você mais recebe?',o:[
+  ['🗂️','"Você é muito organizado(a)"',{O:1,G:1,N:1}],
+  ['🗣️','"Você explica super bem"',{E:2,P:1}],
+  ['✨','"Você é muito criativo(a)"',{C:2}],
+  ['🔧','"Você resolve qualquer coisa no computador"',{T:2}],
+  ['💚','"Você se importa de verdade com as pessoas"',{P:2,S:1}],
+  ['🛡️','"Você é justo(a) e correto(a)"',{J:2}]]},
+ {q:'Que matéria da escola você curtia mais (ou odiava menos)?',grade:true,o:[
+  ['➗','Matemática',{N:2,T:1}],
+  ['✍️','Português, redação ou inglês',{E:2,C:1}],
+  ['🧬','Biologia ou Educação Física',{S:2}],
+  ['🌎','História ou Geografia',{J:1,E:1,O:1}],
+  ['🎨','Artes',{C:2}],
+  ['🤷','Nenhuma, gostava do intervalo',{G:1,P:1}]]},
+ {q:'Daqui a 5 anos, você se vê…',o:[
+  ['🚀','Com o meu próprio negócio',{G:2,C:1}],
+  ['🏆','Sendo referência numa empresa grande',{G:1,N:1,T:1}],
+  ['🏛️','Aprovado(a) num concurso público',{J:2}],
+  ['👩‍🏫','Dando aulas e transformando vidas',{E:2}],
+  ['❤️‍🩹','Cuidando da saúde e do bem-estar das pessoas',{S:2}],
+  ['🌐','Trabalhando com tecnologia de qualquer lugar',{T:2}]]},
+ {q:'O que pesa mais na hora de escolher a faculdade?',o:[
+  ['⚡','Me formar rápido e já crescer no trabalho',{},'curto'],
+  ['🎓','Ter a formação mais completa possível',{},'longo'],
+  ['📱','Estudar 100% online, no meu horário',{},'ead'],
+  ['🏫','Ter aulas presenciais no polo, perto de casa',{},'semi']]}
+];
+
+/* ---------- Estado ---------- */
+var st = { i:0, pontos:{}, respostas:{}, pref:'', escolaridade:'', idade:'', objetivo:'', prazo:'', cidade:'' };
+var historico = [];
+var telas = ['capa','pergunta','sobre','objetivo','contato','analise','resultado'];
+var TOTAL = PERGUNTAS.length + 3;
+function $(id){ return document.getElementById(id); }
+function mostra(nome){
+  telas.forEach(function(t){ $('t-'+t).classList.toggle('on', t === nome); });
+  $('voltar').classList.toggle('on', ['pergunta','sobre','objetivo','contato'].indexOf(nome) >= 0);
+  $('barra').classList.toggle('on', ['pergunta','sobre','objetivo','contato'].indexOf(nome) >= 0);
+  window.scrollTo(0,0);
+}
+function progresso(passo){ $('barraFill').style.width = Math.round(passo / TOTAL * 100) + '%'; }
+
+function renderPergunta(){
+  var p = PERGUNTAS[st.i];
+  $('contador').textContent = 'Pergunta ' + (st.i + 1) + ' de ' + PERGUNTAS.length;
+  $('pergunta').textContent = p.q;
+  var box = $('opcoes'); box.innerHTML = ''; box.className = p.grade ? 'opcoes grade' : 'opcoes';
+  p.o.forEach(function(op, k){
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'op';
+    if (st.respostas[st.i] === k) b.classList.add('sel');
+    b.innerHTML = '<span class="ic">' + op[0] + '</span><span>' + op[1] + '</span>';
+    b.onclick = function(){ escolhe(k, b); };
+    box.appendChild(b);
+  });
+  progresso(st.i + 1);
+  mostra('pergunta');
+}
+function escolhe(k, el){
+  Array.prototype.forEach.call($('opcoes').children, function(c){ c.classList.remove('sel'); });
+  el.classList.add('sel');
+  st.respostas[st.i] = k;
+  if (st.i === 0) px('trackCustom', 'IniciouTeste');
+  setTimeout(function(){
+    historico.push({tela:'pergunta', i:st.i});
+    if (st.i < PERGUNTAS.length - 1) { st.i++; renderPergunta(); }
+    else { progresso(PERGUNTAS.length + 1); mostra('sobre'); }
+  }, 260);
+}
+function calcula(){
+  var pts = {}; Object.keys(ROTULO).forEach(function(k){ pts[k] = 0; });
+  st.pref = '';
+  Object.keys(st.respostas).forEach(function(qi){
+    var op = PERGUNTAS[qi].o[st.respostas[qi]];
+    Object.keys(op[2]).forEach(function(k){ pts[k] += op[2][k]; });
+    if (op[3]) st.pref = op[3];
+  });
+  st.pontos = pts;
+  var ord = Object.keys(pts).sort(function(a,b){ return pts[b] - pts[a]; });
+  return ord;
+}
+function ordenaCursos(lista){
+  var pref = st.pref;
+  return lista.filter(function(k){ return CURSOS[k]; }).map(function(k, idx){
+    var c = CURSOS[k], s = 10 - idx;
+    if (pref === 'curto' && c.t === 'Tecnólogo') s += 4;
+    if (pref === 'longo' && c.t !== 'Tecnólogo') s += 4;
+    if (pref === 'ead' && c.m === 'EAD') s += 4;
+    if (pref === 'semi' && c.m !== 'EAD') s += 4;
+    return {k:k, s:s};
+  }).sort(function(a,b){ return b.s - a.s; }).map(function(x){ return x.k; });
+}
+function sugestoes(ord){
+  var a = ordenaCursos(PERFIS[ord[0]].cursos), b = ordenaCursos(PERFIS[ord[1]].cursos);
+  var out = a.slice(0, 2);
+  for (var i = 0; i < b.length && out.length < 3; i++) if (out.indexOf(b[i]) < 0) out.push(b[i]);
+  for (var j = 2; j < a.length && out.length < 3; j++) if (out.indexOf(a[j]) < 0) out.push(a[j]);
+  return out;
+}
+
+/* ---------- Chips ---------- */
+Array.prototype.forEach.call(document.querySelectorAll('.chips'), function(g){
+  g.addEventListener('click', function(e){
+    var b = e.target.closest('.chip'); if (!b) return;
+    Array.prototype.forEach.call(g.children, function(c){ c.classList.remove('sel'); });
+    b.classList.add('sel'); st[g.getAttribute('data-campo')] = b.getAttribute('data-v');
+  });
+});
+
+/* ---------- Navegação ---------- */
+$('comecar').onclick = function(){ px('track', 'ViewContent', {content_name:'Teste vocacional'}); st.i = 0; renderPergunta(); };
+$('voltar').onclick = function(){
+  var atual = telas.filter(function(t){ return $('t-'+t).classList.contains('on'); })[0];
+  if (atual === 'pergunta') { if (st.i > 0) { st.i--; renderPergunta(); } else mostra('capa'); }
+  else if (atual === 'sobre') { st.i = PERGUNTAS.length - 1; renderPergunta(); }
+  else if (atual === 'objetivo') { progresso(PERGUNTAS.length + 1); mostra('sobre'); }
+  else if (atual === 'contato') { progresso(PERGUNTAS.length + 2); mostra('objetivo'); }
+};
+$('seguirSobre').onclick = function(){
+  st.cidade = $('cidade').value;
+  if (!st.escolaridade || !st.idade || !st.cidade) { $('erroSobre').textContent = 'Responda as três para continuar 🙂'; return; }
+  $('erroSobre').textContent = ''; progresso(PERGUNTAS.length + 2); mostra('objetivo');
+};
+$('seguirObjetivo').onclick = function(){
+  if (!st.objetivo || !st.prazo) { $('erroObjetivo').textContent = 'Escolha uma opção em cada pergunta 🙂'; return; }
+  $('erroObjetivo').textContent = ''; progresso(TOTAL); mostra('contato');
+  setTimeout(function(){ try { $('nome').focus(); } catch(e){} }, 350);
+};
+
+/* máscara do WhatsApp */
+$('zap').addEventListener('input', function(){
+  var d = this.value.replace(/[^0-9]/g,'').slice(0, 11), f = d;
+  if (d.length > 2) f = '(' + d.slice(0,2) + ') ' + d.slice(2);
+  if (d.length > 7) f = '(' + d.slice(0,2) + ') ' + d.slice(2, d.length - 4) + '-' + d.slice(-4);
+  this.value = f;
+});
+
+function utm(){
+  var q = location.search.replace(/^[?]/, ''); var r = [];
+  q.split('&').forEach(function(p){ if (/^(utm_|fbclid)/.test(p)) r.push(decodeURIComponent(p).slice(0, 80)); });
+  return r.join(' ');
+}
+
+$('formContato').addEventListener('submit', function(e){
+  e.preventDefault();
+  var nome = $('nome').value.trim(), d = $('zap').value.replace(/[^0-9]/g,'');
+  if (nome.length < 2) { $('erroContato').textContent = 'Conta pra gente seu nome 🙂'; return; }
+  if (d.length < 10 || d.length > 11) { $('erroContato').textContent = 'Confira seu WhatsApp com DDD, por favor.'; return; }
+  $('erroContato').textContent = ''; $('verResultado').disabled = true;
+  var ord = calcula(), sug = sugestoes(ord), perfil = PERFIS[ord[0]];
+  var respostas = {};
+  Object.keys(st.respostas).forEach(function(qi){ respostas[PERGUNTAS[qi].q] = PERGUNTAS[qi].o[st.respostas[qi]][1]; });
+  var dados = {
+    nome: nome, whatsapp: d, cidade: st.cidade === 'Outra cidade' ? 'Outra' : st.cidade, idade: st.idade,
+    escolaridade: st.escolaridade, objetivo: st.objetivo, prazo: st.prazo,
+    perfil: perfil.nome, cursos: sug.map(function(k){ return CURSOS[k].n; }), respostas: respostas,
+    afinidades: ord.slice(0,3).map(function(k){ return ROTULO[k]; }), utm: utm(), site: $('site').value
+  };
+  if (REAL) {
+    var num = '55' + d;
+    px('init', PIXEL, { ph: num, fn: nome.split(' ')[0].toLowerCase(), ct: (st.cidade || '').toLowerCase().normalize('NFD').replace(/[^a-z]/g,''), st: 'sc', country: 'br' });
+    px('track', 'CompleteRegistration', { content_name: perfil.nome, status: true });
+    px('track', 'Lead', { content_name: perfil.nome });
+    try { fetch(API + 'vocacional-lead', { method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body: JSON.stringify(dados), keepalive:true }).catch(function(){}); } catch(err){}
+  }
+  analisa(function(){ resultado(ord, sug, nome); });
+});
+
+function analisa(fim){
+  mostra('analise');
+  var msgs = ['Cruzando seus interesses','Comparando com mais de 30 cursos','Montando seu perfil'], k = 0;
+  var t = setInterval(function(){ k++; if (k < msgs.length) $('analiseTxt').textContent = msgs[k]; }, 650);
+  setTimeout(function(){ clearInterval(t); fim(); }, 2100);
+}
+
+function resultado(ord, sug, nome){
+  var p = PERFIS[ord[0]], primeiro = nome.split(' ')[0];
+  $('resTopo').innerHTML = '<div class="emoji">' + p.em + '</div><div class="rot">' + esc(primeiro) + ', seu perfil é</div><h2>' + p.nome + '</h2><p>' + p.txt + '</p><div class="tracos">' + p.tracos.map(function(t){ return '<span>' + t + '</span>'; }).join('') + '</div>';
+  var max = st.pontos[ord[0]] || 1;
+  $('afin').innerHTML = ord.slice(0,3).map(function(k, i){
+    var pct = Math.round(42 + 54 * (st.pontos[k] / max)) - (i === 0 ? 0 : i);
+    return '<div><div class="l"><span>' + ROTULO[k] + '</span><span>' + pct + '%</span></div><div class="t"><b data-w="' + pct + '"></b></div></div>';
+  }).join('');
+  setTimeout(function(){ Array.prototype.forEach.call(document.querySelectorAll('.afin b'), function(b){ b.style.width = b.getAttribute('data-w') + '%'; }); }, 120);
+  $('listaCursos').innerHTML = sug.map(function(k, i){
+    var c = CURSOS[k];
+    return '<div class="curso' + (i === 0 ? ' top' : '') + '">' + (i === 0 ? '<span class="badge">MAIS COMPATÍVEL</span>' : '') +
+      '<h3>' + c.n + '</h3><div class="meta"><span>' + c.t + '</span><span>' + c.m + '</span><span>' + c.d + '</span></div><p>' + c.x + '</p>' +
+      '<div class="preco">2 primeiras por <strong>R$ 59</strong>* · depois R$ ' + c.p + '/mês</div></div>';
+  }).join('');
+  var extra = '';
+  if (st.escolaridade === 'medio_incompleto' || st.escolaridade === 'medio_cursando') extra = '<div class="aviso">📌 <strong>Ainda não terminou o ensino médio?</strong> A gente tem um caminho para você concluir os estudos rapidinho e já entrar na faculdade. Chama a nossa consultora que ela te explica.</div>';
+  else if (st.escolaridade === 'superior_completo') extra = '<div class="aviso">📌 <strong>Já tem graduação?</strong> Você pode fazer uma segunda graduação aproveitando matérias ou uma pós na área do seu perfil.</div>';
+  else if (st.escolaridade === 'superior_incompleto') extra = '<div class="aviso">📌 <strong>Começou uma faculdade antes?</strong> Dependendo do caso, dá para aproveitar matérias que você já cursou.</div>';
+  $('avisoExtra').innerHTML = extra;
+  var txt = 'Oi! Fiz o teste vocacional da UNIFAEL 🎓 Meu perfil deu *' + p.nome + '* e os cursos sugeridos foram: ' + sug.map(function(k){ return CURSOS[k].n; }).join(', ') + '. Quero saber mais!';
+  var link = 'https://wa.me/' + ZAP + '?text=' + encodeURIComponent(txt);
+  var bz = $('btnZap'); bz.href = link;
+  bz.onclick = function(){ px('track', 'Contact', { content_name: p.nome }); };
+  mostra('resultado');
+}
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+})();
+</script>
+</body>
+</html>

@@ -55,7 +55,10 @@ const server = createServer(async (req, res) => {
       res.writeHead(200, { 'Content-Type': 'text/plain' }).end('ok');
       return;
     }
-    let file = await findFile(url.pathname);
+    // vocacional.aurasc.com.br abre o teste vocacional na raiz (mesmo app do site).
+    const host = String(req.headers.host || '').split(':')[0].toLowerCase();
+    const pathname = host.startsWith('vocacional.') && url.pathname === '/' ? '/teste-vocacional/' : url.pathname;
+    let file = await findFile(pathname);
     let status = 200;
     if (!file) {
       file = join(ROOT, '404.html');
