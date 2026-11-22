@@ -1,0 +1,27 @@
+---
+// Faixa da marca: logo grande, "desde 2019" e números reais do catálogo.
+import Logo from './Logo.astro';
+import { site } from '../data/site';
+import { cursos, parceiras } from '../data/cursos';
+
+const total = cursos.length;
+const totalArred = Math.floor(total / 50) * 50; // "mais de 300"
+const stats = [
+  { n: `${site.fundacao}`, l: 'Fundada em Balneário Camboriú' },
+  { n: `+${totalArred}`, l: 'Cursos no catálogo' },
+  { n: `${Object.keys(parceiras).length}`, l: 'Instituições parceiras' },
+  { n: '5', l: 'Etapas, do EJA ao mestrado' },
+];
+---
+<section class="brand-band" aria-label="Sobre a marca AURA">
+  <div class="container">
+    <div class="bb-id">
+      <Logo width={260} class="bb-logo" />
+      <p>Desde {site.fundacao}, a AURA ajuda pessoas de Balneário Camboriú e região a dar o próximo passo nos estudos: a gente orienta, faz a matrícula e acompanha você até o diploma.</p>
+      <a class="bb-link" href="/sobre/">Conheça a AURA →</a>
+    </div>
+    <ul class="bb-stats">
+      {stats.map((s) => <li><b>{s.n}</b><span>{s.l}</span></li>)}
+    </ul>
+  </div>
+</section>

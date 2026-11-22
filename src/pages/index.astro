@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import CourseCard from '../components/CourseCard.astro';
 import WaIcon from '../components/WaIcon.astro';
+import BrandBand from '../components/BrandBand.astro';
 import { site, whatsappLink } from '../data/site';
 import { cursos, parceiras, avisoMestrado } from '../data/cursos';
 
@@ -20,7 +21,7 @@ const check = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" strok
     <span class="luz" aria-hidden="true"></span>
     <div class="container">
       <div>
-        <span class="tag"><i>Polo oficial</i>UNIFAEL · CEFE Educa · AGTU</span>
+        <span class="tag"><i>Desde {site.fundacao}</i>Polo oficial UNIFAEL · CEFE Educa · AGTU</span>
         <h1>Educação para cada fase da sua vida. <em>Em um só lugar.</em></h1>
         <p class="sub">Do supletivo ao mestrado internacional: a gente orienta, faz sua matrícula e acompanha você até o diploma.</p>
 
@@ -63,6 +64,8 @@ const check = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" strok
       </div>
     </div>
   </section>
+
+  <BrandBand />
 
   <section class="blk">
     <div class="container">

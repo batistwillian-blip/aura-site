@@ -24,6 +24,8 @@ const orgLd = {
   name: site.nome,
   url: site.url,
   telephone: '+55 47 3514-8552',
+  foundingDate: String(site.fundacao),
+  logo: `${site.url}/favicon.svg`,
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'R. Tailândia, 72, sala 18',
@@ -79,14 +81,14 @@ const orgLd = {
 
   <header class="nav">
     <div class="container">
-      <a href="/" aria-label="AURA Hub Educacional, página inicial"><Logo /></a>
+      <a class="nav-logo" href="/" aria-label="AURA Hub Educacional, página inicial"><Logo width={172} /></a>
       <nav aria-label="Principal">
         <ul class="menu" id="menu">
           {niveis.map((n) => (
             <li><a href={`/${n.id}/`} aria-current={path.startsWith(`/${n.id}`) ? 'page' : undefined}>{n.titulo}</a></li>
           ))}
           <li><a href="/cursos/" aria-current={path.startsWith('/cursos') ? 'page' : undefined}>Todos os cursos</a></li>
-          <li><a href="/sobre/" aria-current={path.startsWith('/sobre') ? 'page' : undefined}>Sobre o hub</a></li>
+          <li><a href="/sobre/" aria-current={path.startsWith('/sobre') ? 'page' : undefined}>Sobre a AURA</a></li>
         </ul>
       </nav>
       <div style="display:flex;gap:6px;align-items:center">
@@ -105,8 +107,9 @@ const orgLd = {
   <footer class="foot">
     <div class="container">
       <div style="display:grid;gap:12px;align-content:start">
-        <Logo dark />
+        <Logo dark width={210} />
         <p>{site.slogan}</p>
+        <span class="since">Desde {site.fundacao} · Balneário Camboriú</span>
       </div>
       <div>
         <h2>Cursos</h2>
@@ -118,7 +121,7 @@ const orgLd = {
       <div>
         <h2>A AURA</h2>
         <ul>
-          <li><a href="/sobre/">Sobre o hub</a></li>
+          <li><a href="/sobre/">Sobre a AURA</a></li>
           <li><a href="/sobre/#parceiras">Instituições parceiras</a></li>
           <li><a href={site.endereco.mapsUrl} target="_blank" rel="noopener">Como chegar</a></li>
         </ul>
@@ -132,7 +135,7 @@ const orgLd = {
         </ul>
       </div>
     </div>
-    <div class="legal"><div class="container">© {new Date().getFullYear()} {site.razaoSocial} · Polo e representante comercial. Os diplomas e certificados são emitidos pelas instituições parceiras.</div></div>
+    <div class="legal"><div class="container">© {site.fundacao}–{new Date().getFullYear()} {site.razaoSocial} · Polo e representante comercial. Os diplomas e certificados são emitidos pelas instituições parceiras.</div></div>
   </footer>
 
   <a class="fab" href={wa} target="_blank" rel="noopener" aria-label="Falar no WhatsApp" data-wa="fab"><WaIcon size={30} color="#fff" /></a>

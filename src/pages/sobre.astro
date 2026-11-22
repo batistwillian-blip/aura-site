@@ -1,17 +1,21 @@
 ---
 import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
 import WaIcon from '../components/WaIcon.astro';
-import { whatsappLink } from '../data/site';
+import { site, whatsappLink } from '../data/site';
 import { parceiras, avisoMestrado } from '../data/cursos';
+
+const check = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>`;
 ---
-<Base title="Sobre o hub" description="A AURA Hub Educacional reúne EJA, técnicos, graduação, pós e mestrado em um só lugar, com polo em Balneário Camboriú e instituições parceiras reconhecidas.">
-  <section class="page-hero tech">
+<Base title="Sobre a AURA" description={`A AURA Hub Educacional existe desde ${site.fundacao} em Balneário Camboriú e reúne EJA, técnicos, graduação, pós e mestrado em um só lugar, com instituições parceiras reconhecidas.`}>
+  <section class="page-hero tech about-hero">
     <span class="luz" aria-hidden="true"></span>
     <div class="container">
-      <nav class="crumbs" aria-label="Você está em"><a href="/">Início</a><span>›</span><span>Sobre o hub</span></nav>
-      <span class="kick">Sobre a AURA</span>
-      <h1>Um só lugar para cada passo da sua educação</h1>
-      <p class="sub">A AURA Hub Educacional nasceu em Balneário Camboriú para simplificar a vida de quem quer estudar. Em vez de procurar uma escola para cada fase, você encontra aqui o EJA, os cursos técnicos, a graduação, a pós e o mestrado, com orientação de verdade do começo ao diploma.</p>
+      <nav class="crumbs" aria-label="Você está em"><a href="/">Início</a><span>›</span><span>Sobre a AURA</span></nav>
+      <Logo dark width={300} class="about-logo" />
+      <span class="kick">Desde {site.fundacao} em Balneário Camboriú</span>
+      <h1>Educação para cada fase da sua vida. <em>Em um só lugar.</em></h1>
+      <p class="sub">A AURA nasceu em {site.fundacao}, em Balneário Camboriú, para simplificar a vida de quem quer estudar. Em vez de procurar uma escola para cada fase, você encontra aqui o EJA, os cursos técnicos, a graduação, a pós e o mestrado, com orientação de verdade do começo ao diploma.</p>
     </div>
   </section>
 
@@ -19,18 +23,29 @@ import { parceiras, avisoMestrado } from '../data/cursos';
     <div class="container two">
       <div class="prose">
         <section>
-          <h2>O que é um hub educacional</h2>
-          <p>A AURA é a curadora e o ponto de apoio. Escolhemos instituições sérias, orientamos você na escolha do curso, cuidamos da matrícula e acompanhamos sua jornada. As instituições parceiras oferecem o conteúdo e emitem o diploma.</p>
+          <h2>Quem somos</h2>
+          <p>A AURA Hub Educacional é a frente de educação da {site.razaoSocial}. Somos polo oficial da UNIFAEL em Balneário Camboriú e representamos instituições parceiras que oferecem o conteúdo e emitem o diploma. A gente escolhe essas parceiras, orienta você na escolha do curso, cuida da matrícula e acompanha sua jornada.</p>
         </section>
         <section>
-          <h2>Nosso compromisso</h2>
-          <p>Lidamos com o sonho das pessoas. Por isso falamos com clareza, sem promessas que não podemos cumprir, e indicamos o caminho certo para você, mesmo que não seja o mais caro.</p>
+          <h2>No que acreditamos</h2>
+          <ul class="checks">
+            <li><Fragment set:html={check} /><span><b>Clareza.</b> Valores, prazos e documentos sem letras miúdas.</span></li>
+            <li><Fragment set:html={check} /><span><b>Acolhimento.</b> Ninguém é julgado por ter parado de estudar. Recomeçar é normal.</span></li>
+            <li><Fragment set:html={check} /><span><b>Honestidade.</b> Indicamos o caminho certo para você, mesmo que não seja o mais caro.</span></li>
+            <li><Fragment set:html={check} /><span><b>Agilidade.</b> A Aurora responde na hora, e uma pessoa da equipe assume sempre que você quiser.</span></li>
+          </ul>
+        </section>
+        <section>
+          <h2>Por que "AURA"</h2>
+          <p>Aura é a luz que envolve. É o que queremos ser para cada aluno: uma presença que ilumina o próximo passo, do supletivo ao mestrado. O ponto de luz no nosso símbolo representa isso.</p>
         </section>
       </div>
       <aside class="side">
-        <h3>Ficou com alguma dúvida?</h3>
-        <p>A Aurora responde 24h pelo WhatsApp.</p>
+        <span class="pill-ai on-light">Aurora online</span>
+        <h3>Fale com a gente</h3>
+        <p>A Aurora responde 24h pelo WhatsApp. Se preferir, venha ao polo: {site.endereco.linha1}, {site.endereco.linha2}.</p>
         <a class="btn-wa" href={whatsappLink()} target="_blank" rel="noopener" data-wa="sobre"><WaIcon />Falar com a Aurora</a>
+        <div class="by">{site.nome} · desde {site.fundacao}</div>
       </aside>
     </div>
   </section>

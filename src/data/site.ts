@@ -14,6 +14,7 @@ export const site = {
     mapsUrl: 'https://www.google.com/maps/search/?api=1&query=R.+Tail%C3%A2ndia%2C+72+-+Na%C3%A7%C3%B5es%2C+Balne%C3%A1rio+Cambori%C3%BA+-+SC',
   },
   razaoSocial: 'AURA Consultoria e Educação Ltda.',
+  fundacao: 2019,
   gtmId: (import.meta.env.PUBLIC_GTM_ID ?? '').trim(),
   metaPixelId: (import.meta.env.PUBLIC_META_PIXEL_ID ?? '').replace(/\D/g, ''),
 };

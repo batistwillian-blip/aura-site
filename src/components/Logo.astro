@@ -1,12 +1,13 @@
 ---
-interface Props { dark?: boolean; width?: number }
-const { dark = false, width = 140 } = Astro.props;
+// Logo AURA (Manual da Marca v1.0). Ícone 60u, raio 18u, ponto de luz ø12u a 55%.
+interface Props { dark?: boolean; width?: number; class?: string }
+const { dark = false, width = 140, class: cls } = Astro.props;
 const word = dark ? '#ffffff' : '#2A0A6B';
-const sub = dark ? '#a49fc0' : '#6a6779';
+const sub = dark ? '#B7AFD6' : '#5E5A70';
 ---
-<svg width={width} viewBox="0 0 132 40" role="img" aria-label="AURA Hub Educacional">
-  <rect x="0" y="2" width="36" height="36" rx="11" fill="#6411E8" />
-  <circle cx="28" cy="10" r="3.6" fill="#fff" opacity=".55" />
+<svg class={cls} width={width} viewBox="0 0 132 40" role="img" aria-label="AURA Hub Educacional">
+  <rect x="0" y="2" width="36" height="36" rx="10.8" fill="#6411E8" />
+  <circle cx="28.2" cy="9.2" r="3.6" fill="#fff" opacity=".55" />
   <text x="18" y="29" text-anchor="middle" font-family="Plus Jakarta Sans, system-ui, sans-serif" font-weight="800" font-size="23" fill="#fff">a</text>
   <text x="45" y="23" font-family="Plus Jakarta Sans, system-ui, sans-serif" font-weight="800" font-size="21" letter-spacing="-.8" fill={word}>aura</text>
   <text x="46" y="35" font-family="Plus Jakarta Sans, system-ui, sans-serif" font-weight="600" font-size="8.5" fill={sub}>hub educacional</text>
