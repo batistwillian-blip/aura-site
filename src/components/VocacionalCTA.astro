@@ -1,0 +1,28 @@
+---
+// Chamada para o teste vocacional (vocacional.aurasc.com.br). O teste termina no WhatsApp da Aurora.
+import { vocacionalLink } from '../data/site';
+const href = vocacionalLink('home_faixa');
+const passos = [
+  { n: '01', t: '8 perguntas rápidas', d: 'Sobre o seu jeito, seus interesses e seus planos.' },
+  { n: '02', t: 'Seu perfil na hora', d: 'Seus pontos fortes e as áreas que combinam com você.' },
+  { n: '03', t: 'Cursos sugeridos', d: 'E a Aurora explica cada um pelo WhatsApp, se você quiser.' },
+];
+---
+<section class="blk voc-wrap">
+  <div class="container">
+    <div class="voc">
+      <div class="voc-txt">
+        <span class="voc-selo">Teste vocacional gratuito</span>
+        <h2>Ainda não sabe que curso fazer? <em>Descubra sua vocação em 2 minutos.</em></h2>
+        <p>Responda o teste, conheça o seu perfil e veja os cursos que têm a ver com você. Sem certo ou errado, e com o resultado na hora.</p>
+        <div class="voc-ctas">
+          <a class="btn-voc" href={href} data-voc="home_faixa">Fazer o teste grátis →</a>
+          <span class="voc-meta">2 min · 100% gratuito · resultado na hora</span>
+        </div>
+      </div>
+      <ol class="voc-passos">
+        {passos.map((p) => <li><b>{p.n}</b><div><strong>{p.t}</strong><span>{p.d}</span></div></li>)}
+      </ol>
+    </div>
+  </div>
+</section>

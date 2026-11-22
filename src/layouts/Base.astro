@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 import WaIcon from '../components/WaIcon.astro';
-import { site, whatsappLink } from '../data/site';
+import { site, whatsappLink, vocacionalLink } from '../data/site';
 import { niveis } from '../data/cursos';
 
 interface Props {
@@ -123,6 +123,7 @@ const orgLd = {
         <ul>
           <li><a href="/sobre/">Sobre a AURA</a></li>
           <li><a href="/sobre/#parceiras">Instituições parceiras</a></li>
+          <li><a href={vocacionalLink('rodape')} data-voc="rodape">Teste vocacional</a></li>
           <li><a href={site.endereco.mapsUrl} target="_blank" rel="noopener">Como chegar</a></li>
         </ul>
       </div>
@@ -146,6 +147,14 @@ const orgLd = {
     btn?.addEventListener('click', () => {
       const open = menu?.classList.toggle('open') ?? false;
       btn.setAttribute('aria-expanded', String(open));
+    });
+    // Clique no teste vocacional
+    document.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest('a[data-voc]');
+      if (!a) return;
+      const w = window as any;
+      w.dataLayer?.push({ event: 'vocacional_click', origem: a.getAttribute('data-voc') });
+      w.fbq?.('trackCustom', 'CliqueTesteVocacional', { origem: a.getAttribute('data-voc') });
     });
     // Evento de conversão: clique em qualquer link de WhatsApp
     document.addEventListener('click', (e) => {

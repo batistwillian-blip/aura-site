@@ -15,6 +15,8 @@ export const site = {
   },
   razaoSocial: 'AURA Consultoria e Educação Ltda.',
   fundacao: 2019,
+  /** Teste vocacional (página própria, termina no WhatsApp da Aurora). */
+  vocacionalUrl: 'https://vocacional.aurasc.com.br/',
   gtmId: (import.meta.env.PUBLIC_GTM_ID ?? '').trim(),
   metaPixelId: (import.meta.env.PUBLIC_META_PIXEL_ID ?? '').replace(/\D/g, ''),
 };
@@ -22,4 +24,9 @@ export const site = {
 /** Link do WhatsApp com mensagem já preenchida. */
 export function whatsappLink(mensagem = 'Olá! Vim pelo site da AURA e quero saber mais sobre os cursos.') {
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensagem)}`;
+}
+
+/** Link para o teste vocacional, marcando de onde o visitante veio (aparece no lead como utm). */
+export function vocacionalLink(origem: string) {
+  return `${site.vocacionalUrl}?utm_source=site&utm_medium=${encodeURIComponent(origem)}&utm_campaign=teste_vocacional`;
 }

@@ -3,7 +3,8 @@ import Base from '../layouts/Base.astro';
 import CourseCard from '../components/CourseCard.astro';
 import WaIcon from '../components/WaIcon.astro';
 import BrandBand from '../components/BrandBand.astro';
-import { site, whatsappLink } from '../data/site';
+import { site, whatsappLink, vocacionalLink } from '../data/site';
+import VocacionalCTA from '../components/VocacionalCTA.astro';
 import { cursos, parceiras, avisoMestrado } from '../data/cursos';
 
 const destaques = [
@@ -43,6 +44,7 @@ const check = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" strok
             <button class="btn-pri" type="submit">Buscar curso</button>
           </div>
         </form>
+        <a class="voc-mini" href={vocacionalLink('home_busca')} data-voc="home_busca"><span>Não sabe o que escolher?</span> Faça o teste vocacional grátis →</a>
 
         <ul class="trust">
           <li><Fragment set:html={check} />Diploma emitido pela instituição parceira</li>
@@ -98,6 +100,8 @@ const check = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" strok
       </div>
     </div>
   </section>
+
+  <VocacionalCTA />
 
   <section class="blk alt">
     <div class="container">
