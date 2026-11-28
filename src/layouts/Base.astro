@@ -30,9 +30,12 @@ const orgLd = {
     '@type': 'PostalAddress',
     streetAddress: 'R. Tailândia, 72, sala 18',
     addressLocality: 'Balneário Camboriú',
+    postalCode: site.endereco.cep,
     addressRegion: 'SC',
     addressCountry: 'BR',
   },
+  geo: { '@type': 'GeoCoordinates', latitude: site.endereco.lat, longitude: site.endereco.lng },
+  hasMap: site.endereco.mapsUrl,
 };
 ---
 <!doctype html>

@@ -10,8 +10,12 @@ export const site = {
   telefoneExibicao: '(47) 3514-8552',
   endereco: {
     linha1: 'R. Tailândia, 72, sala 18 · Nações',
-    linha2: 'Balneário Camboriú · SC',
-    mapsUrl: 'https://www.google.com/maps/search/?api=1&query=R.+Tail%C3%A2ndia%2C+72+-+Na%C3%A7%C3%B5es%2C+Balne%C3%A1rio+Cambori%C3%BA+-+SC',
+    linha2: 'Balneário Camboriú · SC · CEP 88338-150',
+    cep: '88338-150',
+    // Perfil "UNIFAEL Balneário Camboriú" no Google (o mesmo do link de compartilhamento do polo).
+    lat: -26.9752522,
+    lng: -48.6394282,
+    mapsUrl: 'https://www.google.com/maps/place/UNIFAEL+Balne%C3%A1rio+Cambori%C3%BA/@-26.9752522,-48.6394282,17z/data=!4m6!3m5!1s0x94d8b6695ce76b03:0x9a596c03b0e5d13b!8m2!3d-26.9752522!4d-48.6394282!16s%2Fg%2F11gbxg8l5_',
   },
   razaoSocial: 'AURA Consultoria e Educação Ltda.',
   fundacao: 2019,
